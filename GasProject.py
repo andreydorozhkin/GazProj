@@ -10,10 +10,7 @@ root = tk.Tk()
 root.geometry('1300x800')
 
 def changeMaterials():
-    comboExample["values"] = [  "Чугун", 
-                                "Нержавейка",
-                                "FuckingSlave",
-                                "Потный мужик"
+    comboExample["values"] = [  
                                 ]
 
 def do_plot(x, y):
@@ -67,10 +64,7 @@ lbl1 = Label(root, text="Материал газопровода")
 lbl1.place(x=X1,y=mass[5])
 comboExample = ttk.Combobox(root, 
                             values=[
-                                    "Чугун", 
-                                    "Нержавейка",
-                                    "FuckingSlave",
-                                    "Потный мужик"],
+                                    ],
                             postcommand=changeMaterials, width=17)
 comboExample.place(x=X2, y=mass[5])
 
