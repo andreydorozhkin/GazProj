@@ -10,10 +10,7 @@ root = tk.Tk()
 root.geometry('1300x800')
 
 def changeMaterials():
-    comboExample["values"] = [  "Чугун", 
-                                "Нержавейка",
-                                "FuckingSlave",
-                                "Потный мужик"
+    comboExample["values"] = [  
                                 ]
 
 def do_plot(x, y):
