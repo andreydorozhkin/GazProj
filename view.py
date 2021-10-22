@@ -173,7 +173,7 @@ def message_ask():
     messagebox.askquestion("Request!","Нет ошибки, график отрисован?")
 def message_eroror1():
     messagebox.messagebox.showerror("Error","AMOGUS, кто то ввел не число")
-def message_eroror1():
+def message_eroror2():
     messagebox.messagebox.showwarning("Error","Где-то ошибка")
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
