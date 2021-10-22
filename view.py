@@ -171,9 +171,9 @@ def message_info():
     messagebox.showinfo("Result","Результат в консоли = "+box_result) 
 def message_ask():
     messagebox.askquestion("Request!","Нет ошибки, график отрисован?")
-def message_eroror1():
+def message_error1():
     messagebox.messagebox.showerror("Error","AMOGUS, кто то ввел не число")
-def message_eroror2():
+def message_error2():
     messagebox.messagebox.showwarning("Error","Где-то ошибка")
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
@@ -189,7 +189,7 @@ btplot2=Button(root, text="Сумма первых 2ух полей в бокс"
                  foreground="#F2F2F2",   # цвет текста
                  padx="20",              # отступ от границ до содержимого по горизонтали
                  pady="8",               # отступ от границ до содержимого по вертикали
-                 font="16", command=model.suum)
+                 font="16", command=model.sum)
 btplot2.place(x=1, y=650, width=400, height=40)
 
 
