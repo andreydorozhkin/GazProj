@@ -6,9 +6,9 @@ def suum():
         view.num2=int(view.txt2.get())
         view.box_result=str(view.num1+view.num2)
         print(view.box_result)
-        view.messagebox.showinfo("Result","Результат в консоли = "+view.box_result)      
+        view.message_info()    
     except:
-        view.messagebox.showerror("Error","AMOGUS, кто то ввел не число")
+        view.message_error1()
        
 
 def do_plot():
@@ -18,6 +18,6 @@ def do_plot():
         [view.ax[x].clear() for x in range(1)]
         view.ax[0].plot(x,y)
         view.canvas.draw()
-        view.messagebox.askquestion("Request!","Нет ошибки, график отрисован?")
+        view.message_ask();
     except:
-        view.messagebox.showwarning("Error","Где-то ошибка")
+        view.message_error2()
