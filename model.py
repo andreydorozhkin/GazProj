@@ -20,4 +20,4 @@ def do_plot():
         view.canvas.draw()
         view.messagebox.askokcancel("Привет!","Нет ошибки, график отрисован?")
     except:
-        view.messagebox.showwarning("Error","Где-то ошиба")
+        view.messagebox.showwarning("Error","Где-то ошибка")
