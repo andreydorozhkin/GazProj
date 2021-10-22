@@ -174,7 +174,7 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  foreground="#F2F2F2",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
-                 font="16", command=lambda: model.plotting)
+                 font="16", command= lambda: model.do_plot(x, y))
 btplot1.place(x=430, y=650, width=100, height=40)
 
 btplot2=Button(root, text="Сумма первых 2ух полей в бокс",
