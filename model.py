@@ -1,6 +1,6 @@
 import view
 import numpy as np
-def suum():
+def sum():
     try:
         view.num1=int(view.txt1.get())
         view.num2=int(view.txt2.get())
