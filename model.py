@@ -18,6 +18,6 @@ def do_plot():
         [view.ax[x].clear() for x in range(1)]
         view.ax[0].plot(x,y)
         view.canvas.draw()
-        view.messagebox.askquestion("Привет!","Нет ошибки, график отрисован?")
+        view.messagebox.askquestion("Request!","Нет ошибки, график отрисован?")
     except:
         view.messagebox.showwarning("Error","Где-то ошибка")
