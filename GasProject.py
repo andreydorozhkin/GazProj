@@ -217,11 +217,8 @@ def suum():
         num1=int(txt1.get())
         num2=int(txt2.get())
         num3=(comboExample.get())
-        if num3=="Чугун":
-            #if type(num1 or num2) == int or type(num1 or num2) == float:
-            print (num1+num2+10)
-        else:
-            print (num1+num2)
+        #if type(num1 or num2) == int or type(num1 or num2) == float:
+        print (num1+num2+10)
     except:
         messagebox.showinfo("GUI Python", "Бл, тут АМОГУС, кто то ввел не число")
         
