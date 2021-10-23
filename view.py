@@ -167,7 +167,7 @@ lbl1.place(x=X1,y=mass[26])
 txt27 = Entry(root,width=20)  
 txt27.place(x=X2,y=mass[26])
 
-message_dictonary=["Result","Результат в консоли = ",
+message_mass=["Result","Результат в консоли = ",
                   "Request!", "Нет ошибки, график отрисован?",
                   "Error", "AMOGUS, кто то ввел не число",
                   "Error", "Где-то ошибка"]
