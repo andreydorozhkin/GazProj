@@ -18,6 +18,15 @@ ax = [figure.add_subplot(1, 1, x+1) for x in range(1)]
 def changeMaterials():
     comboExample["values"] = [ "Сталь", "Аллюминий"]
 
+#Вывод ошибок
+def message_info(x):
+    messagebox.showinfo(x[0],x[1]) 
+def message_ask(x):
+    messagebox.askquestion(x[0],x[1])
+def message_error(x):
+    messagebox.showerror(x[0], x[1])
+
+
 a=30
 b=5
 c=0
@@ -172,12 +181,7 @@ message_mass=["Result","Результат в консоли = ",
                   "Error", "AMOGUS, кто то ввел не число",
                   "Error", "Где-то ошибка"]
 
-def message_info(x,y):
-    messagebox.showinfo(x,y) 
-def message_ask(x,y):
-    messagebox.askquestion(x,y)
-def message_error(x,y):
-    messagebox.showerror(x,y)
+
 
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 

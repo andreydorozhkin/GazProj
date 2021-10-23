@@ -6,9 +6,9 @@ def sum():
         num2=int(view.txt2.get())
         box_result=str(num1+num2)
         print(box_result)
-        view.message_info(view.message_mass[0], view.message_mass[1]+box_result)    
+        view.message_info(["Result","Результат в консоли = "+box_result])    
     except:
-        view.message_error(view.message_mass[4], view.message_mass[5])
+        view.message_error(["Error", "AMOGUS, кто то ввел не число"])
        
 
 def do_plot():
@@ -18,6 +18,6 @@ def do_plot():
         [view.ax[x].clear() for x in range(1)]
         view.ax[0].plot(x,y)
         view.canvas.draw()
-        view.message_ask(view.message_mass[2], view.message_mass[3]);
+        view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
     except:
-        view.message_error(view.message_mass[6], view.message_mass[7])
+        view.message_error(["Error", "Где-то ошибка"])
