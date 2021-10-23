@@ -5,10 +5,10 @@ def sum():
         view.num1=int(view.txt1.get())
         view.num2=int(view.txt2.get())
         view.box_result=str(view.num1+view.num2)
-        print(view.box_result)
-        view.message_info()    
+        view.print(box_result)
+        view.message_info(view.message_dictonary[0], view.message_dictonary.values[1]+box_result)    
     except:
-        view.message_error1()
+        view.message_error(view.message_dictonary[4], view.message_dictonary[5])
        
 
 def do_plot():
@@ -18,6 +18,6 @@ def do_plot():
         [view.ax[x].clear() for x in range(1)]
         view.ax[0].plot(x,y)
         view.canvas.draw()
-        view.message_ask();
+        view.message_ask(view.message_dictonary[2], view.message_dictonary[3]);
     except:
-        view.message_error2()
+        view.message_error(view.message_dictonary[6], view.message_dictonary[7])
