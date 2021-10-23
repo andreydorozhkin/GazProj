@@ -39,6 +39,7 @@ def generate_field(name_field, x_label, y_label, x_entry, y_entry):
     lab.place(x=x_label, y=y_label)
     text = Entry(root, width=20)
     text.place(x=x_entry, y=y_entry)
+    return text
 
 mass=generate_coordinat(30, 5, 0)
 X1=710
