@@ -2,8 +2,8 @@ import view
 import numpy as np
 def sum():
     try:
-        num1=int(view.txt1.get())
-        num2=int(view.txt2.get())
+        num1=int(view.initial_enegry_consum.text.get())
+        num2=int(view.unit_cost_liquefaction_complex.text.get())
         box_result=str(num1+num2)
         print(box_result)
         view.message_info(["Result","Результат в консоли = "+box_result])    

@@ -15,60 +15,53 @@ canvas.get_tk_widget().place(x=10,y=10,width=700,height=650)
 ax = [figure.add_subplot(1, 1, x+1) for x in range(1)]
 
 #Визуальный метод определния материала
-def changeMaterials():
-    comboExample["values"] = [ "Сталь", "Аллюминий"]
+# def changeMaterials():
+#   comboExample["values"] = [ "Сталь", "Аллюминий"]
 
 #Вывод ошибок
-def message_info(x):
-    messagebox.showinfo(x[0],x[1]) 
-def message_ask(x):
-    messagebox.askquestion(x[0],x[1])
-def message_error(x):
-    messagebox.showerror(x[0], x[1])
+def message_info(message):
+    messagebox.showinfo(message[0],message[1]) 
+def message_ask(message):
+    messagebox.askquestion(message[0],message[1])
+def message_error(message):
+    messagebox.showerror(message[0], message[1])
 
+def generate_coordinat(a, b, c):
+    coordinat=[]
+    while c!=a:
+        c+=1
+        coordinat=coordinat+[b]
+        b=b+25
+    return coordinat
 
-a=30
-b=5
-c=0
-mass=[]
-while c!=a:
-    c+=1
-    mass=mass+[b]
-    b=b+25
+def generate_field(name_field, x_field, y_field, x_entry, y_entry):
+    lab = Label(root, text=name_field)
+    lab.place(x=x_field, y=y_field)
+    text = Entry(root, width=20)
+    text.place(x=x_entry, y=y_entry)
+
+mass=generate_coordinat(30, 5, 0)
 X1=710
 X2=1150
 
-lbl = Label(root, text="Начальное годовое энергопотребление объектом газификации. (МВт*ч)/год")  
-lbl.place(x=X1,y=mass[0])
-txt1 = Entry(root,width=20)  
-txt1.place(x=X2,y=mass[0])
-
-lbl1 = Label(root, text="Удельные затраты на комплекс сжижения газа. (руб./(МВ*ч)))")  
-lbl1.place(x=X1,y=mass[1])  
-txt2 = Entry(root,width=20)  
-txt2.place(x=X2,y=mass[1])
-
-lbl1 = Label(root, text="Начальное расстояние до населенного пункта. км")  
-lbl1.place(x=X1,y=mass[2])  
-txt3 = Entry(root,width=20)  
-txt3.place(x=X2,y=mass[2])
-
-lbl1 = Label(root, text="Число жителей в снабжаемом городе. тыс. чел.")  
-lbl1.place(x=X1,y=mass[3])  
-txt4 = Entry(root,width=20)  
-txt4.place(x=X2,y=mass[3])
+initial_enegry_consum = generate_field("Начальное годовое энергопотребление объектом газификации. (МВт*ч)/год", X1, mass[0], X2, mass[0])
+unit_cost_liquefaction_complex = generate_field("Удельные затраты на комплекс сжижения газа. (руб./(МВ*ч)))", X1, mass[1], X2, mass[1])
+initial_distance = generate_field("Начальное расстояние до населенного пункта. км", X1, mass[2], X2, mass[2])
+inhabitants = generate_field("Число жителей в снабжаемом городе. тыс. чел.", X1, mass[3], X2, mass[3])
 
 lbl1 = Label(root, text="Допустимые потери давления газопроводе, МПа")  
 lbl1.place(x=X1,y=mass[4])  
 txt5 = Entry(root,width=20)  
 txt5.place(x=X2,y=mass[4])
 
-lbl1 = Label(root, text="Материал газопровода")  
-lbl1.place(x=X1,y=mass[5])
-comboExample = ttk.Combobox(root, 
-                            values=[],
-                            postcommand=changeMaterials, width=17)
-comboExample.place(x=X2, y=mass[5])
+test_field = generate_field("Материал газопровода", X1, mass[5], X2, mass[5])
+
+# lbl1 = Label(root, text="Материал газопровода")  
+# lbl1.place(x=X1,y=mass[5])
+# comboExample = ttk.Combobox(root, 
+#                            values=[],
+#                            postcommand=changeMaterials, width=17)
+# comboExample.place(x=X2, y=mass[5])
 
 
 lbl1 = Label(root, text="Усредненное давление газа (абсолютное) в сети. МПф")  
@@ -175,13 +168,6 @@ lbl1 = Label(root, text="Шаг увеличения энергопотребл�
 lbl1.place(x=X1,y=mass[26])  
 txt27 = Entry(root,width=20)  
 txt27.place(x=X2,y=mass[26])
-
-message_mass=["Result","Результат в консоли = ",
-                  "Request!", "Нет ошибки, график отрисован?",
-                  "Error", "AMOGUS, кто то ввел не число",
-                  "Error", "Где-то ошибка"]
-
-
 
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
