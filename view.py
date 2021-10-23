@@ -34,9 +34,9 @@ def generate_coordinat(a, b, c):
         b=b+25
     return coordinat
 
-def generate_field(name_field, x_field, y_field, x_entry, y_entry):
+def generate_field(name_field, x_label, y_label, x_entry, y_entry):
     lab = Label(root, text=name_field)
-    lab.place(x=x_field, y=y_field)
+    lab.place(x=x_label, y=y_label)
     text = Entry(root, width=20)
     text.place(x=x_entry, y=y_entry)
 
