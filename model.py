@@ -2,13 +2,13 @@ import view
 import numpy as np
 def sum():
     try:
-        view.num1=int(view.txt1.get())
-        view.num2=int(view.txt2.get())
-        view.box_result=str(view.num1+view.num2)
-        view.print(box_result)
-        view.message_info(view.message_dictonary[0], view.message_dictonary.values[1]+box_result)    
+        num1=int(view.txt1.get())
+        num2=int(view.txt2.get())
+        box_result=str(num1+num2)
+        print(box_result)
+        view.message_info(view.message_mass[0], view.message_mass[1]+box_result)    
     except:
-        view.message_error(view.message_dictonary[4], view.message_dictonary[5])
+        view.message_error(view.message_mass[4], view.message_mass[5])
        
 
 def do_plot():
@@ -18,6 +18,6 @@ def do_plot():
         [view.ax[x].clear() for x in range(1)]
         view.ax[0].plot(x,y)
         view.canvas.draw()
-        view.message_ask(view.message_dictonary[2], view.message_dictonary[3]);
+        view.message_ask(view.message_mass[2], view.message_mass[3]);
     except:
-        view.message_error(view.message_dictonary[6], view.message_dictonary[7])
+        view.message_error(view.message_mass[6], view.message_mass[7])
