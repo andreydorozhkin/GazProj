@@ -14,6 +14,7 @@ canvas = FigureCanvasTkAgg(figure, frame1)
 canvas.get_tk_widget().place(x=10,y=10,width=700,height=650)
 ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 
+
 #Визуальный метод определния материала
 def changeMaterials():
    comboExample["values"] = ["100", "1000", "10000"]
