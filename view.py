@@ -41,10 +41,11 @@ def generate_field(name_field, x_label, y_label, x_entry, y_entry):
     text.place(x=x_entry, y=y_entry)
     return text
 
+print(model.liquidation_value(299845.51, 27768000, 4049849.86, 2554200, 1, 30, 40000))
 mass=generate_coordinat(30, 5, 0)
 X1=710
 X2=1150
-
+print(model.critical_distance(9.42, 1720710.28, 0.909, 121.8, 33477498.85, 9.5, 11325.02, 0.9, 12.18, 4864558, 30))
 initial_enegry_consum = generate_field("Начальное годовое энергопотребление объектом газификации. (МВт*ч)/год", X1, mass[0], X2, mass[0])
 unit_cost_liquefaction_complex = generate_field("Удельные затраты на комплекс сжижения газа. (руб./(МВ*ч)))", X1, mass[1], X2, mass[1])
 initial_distance = generate_field("Начальное расстояние до населенного пункта. км", X1, mass[2], X2, mass[2])
