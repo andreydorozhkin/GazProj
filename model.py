@@ -36,9 +36,9 @@ def discount_rate(t_cl, E):
     rate = numerator/denominator
     return rate
 
-
+# Остаточная ликвидационная стоиомость
 def liquidation_value(K_ksg, K_cist, K_khsv, K_gazif, t0, t_cl, K_hswd):
-    one_mltpr = t_cl - t0 / t_cl * (K_ksg + K_cist + K_gazif + K_khsv - K_hswd)
+    one_mltpr = (t_cl-t0)/t_cl*(K_ksg+K_cist+K_gazif+K_khsv-K_hswd)
     return one_mltpr
 
 # Расчет критического радиуса
