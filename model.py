@@ -53,14 +53,28 @@ def do_plot():
             view.message_error(["Error", "Где-то ошибка"])
 
 # Эксплуатационные затраты на обслуживание ГРП
+
+def Q_year(need_city):
+    return need_city/12185.4
+
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
 
-# Капитальные затраты на хранилища
+
+# Мощность газификатора
+def power_gazif():
+    return 200/1380
+
+# Капитальные затраты на газификатор
 def capital_costs_gazif(Q_year, power_gazif, cost_gazif):
     capital=math.ceil(Q_year/power_gazif/365/24)
     capital*=cost_gazif
     return capital
+
+# Эксплуатационные затраты на газификатор
+def operating_costs_gazif(capital_costs):
+    return capital_costs / 100
+
 # Капитальные затраты на хранилища
 def capital_costs_storage(num_storage, cost_storage):
     return num_storage * cost_storage
@@ -88,7 +102,7 @@ def liquidation_value(K_ksg, K_cist, K_khsv, K_gazif, t0, t_cl, K_hswd):
     return one_mltpr
 
 # Расчет критического радиуса
-def critical_distance(discount_rate(30, 0.1),  operating_costs_spg(1, operating_costs_storage(capital_costs_storage(1, 4049849,86)),  ), Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
+def critical_distance(Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
     one_mltpr = Y_tcl * N_spg
     two_mltpr = Y_t0*(N_spg+K_shgrp-L_spg)
     three_mltpr_1 = Y_tcl-Y_t0
