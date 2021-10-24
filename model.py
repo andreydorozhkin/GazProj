@@ -50,6 +50,12 @@ def do_plot():
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
             view.message_error(["Error", "Где-то ошибка"])
+
+# Эксплуатационные затраты на обслуживание ГРП
+def operating_cost_shgrp(K_shgrp):
+    return K_shgrp/10
+
+
 # Эксплутационные расходы по доставке СПГ
 def operating_costs_spg(N_cist, N_chw, N_gazif, N_ksg, Q_year, a):
     numerator = Q_year * a/0.9
