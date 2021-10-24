@@ -22,6 +22,7 @@ def do_plot():
         try:
             [view.ax[x].clear() for x in range(1)]
             view.ax[0].plot(x,y, color="red",label="Q=100" )
+            view.figure.legend(loc = "upper left")
             view.canvas.draw()
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
@@ -32,6 +33,7 @@ def do_plot():
         try:
             #[view.ax[x].clear() for x in range(1)]
             view.ax[0].plot(x,y,color="green",label="Q=1000")
+            view.figure.legend(loc = "upper left")
             view.canvas.draw()
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
@@ -42,6 +44,7 @@ def do_plot():
         try:
             #[view.ax[x].clear() for x in range(1)]
             view.ax[0].plot(x,y,color="blue",label="Q=1000")
+            view.figure.legend(loc = "upper left")
             view.canvas.draw()
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
