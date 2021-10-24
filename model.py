@@ -113,5 +113,25 @@ def critical_distance(Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_
     distance = numerator/denominator
     return distance
 
+def coof_A(Pm):
+    A=0.101325/Pm*162*(pow(3.14))
+    return A
 
-
+def diametr(A,p0,Q0,P_ud):
+    material_steel=[0.022, 2, 5] 
+    material_polyethylene=[0.0446, 1.75, 4.75]  #A,m1,m2
+    if view.comboExample.get()=="Сталь":
+        B=material_steel[0]
+        m=material_steel[1]
+        m1=material_steel[2]
+    if view.comboExample.get()=="Полиэтилен":
+        B=material_polyethylene[0]
+        m=material_polyethylene[1]
+        m1=material_polyethylene[2]
+    else:
+        pass
+    dp=(A*B*p0*(Q0**m))/P_ud
+    x=dp
+    y=m1
+    dp=pow(x,(1/y))
+    return dp
