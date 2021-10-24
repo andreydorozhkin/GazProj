@@ -1,24 +1,81 @@
-from numpy.lib.financial import rate
 import view
 import numpy as np
 import math
-def sum():
-    try:
-        num1=int(view.initial_enegry_consum.get())
-        num2=int(view.unit_cost_liquefaction_complex.get())
-        box_result=str(num1+num2)
-        print(box_result)
-        view.message_info(["Result","Результат в консоли = "+box_result])    
-    except:
-        view.message_error(["Error", "AMOGUS, кто то ввел не число"])
-       
+
+def cost_gas(field):
+    request=float(field.get())
+    return request
+    
+def cost_natur_liquided_gas(field):
+    request=float(field.get())
+    return request
+
+def city_need_energy(field):
+    request=float(field.get())
+    return request
+
+def cost_cistern(field):
+    request=float(field.get())
+    return request
+
+def volume_cistern(field):
+    request=float(field.get())
+    return request
+
+def number_cistern(field):
+    request=float(field.get())
+    return request
+
+def cost_tank(field):
+    request=float(field.get())
+    return request
+
+def number_tank(field):
+    request=float(field.get())
+    return request
+
+def cost_gasifiers(field):
+    request=float(field.get())
+    return request
+
+def cost_laying_high(field):
+    request=float(field.get())
+    return request
+
+def cost_laying_medium(field):
+    request=float(field.get())
+    return request
+
+def cost_GRPSH(field):
+    request=float(field.get())
+    return request
+
+def efficiency_GRPSH(field):
+    request=float(field.get())
+    return request
+
+def cost_maintenance_GRPSH(field):
+    request=float(field.get())
+    return request
+
+def cost_maintenance_gas_pipeline(field):
+    request=float(field.get())
+    return request
+
+def cost_maintenance_gas_pipeline(field):
+    request=float(field.get())
+    return request
+
+def gas_material(field):
+    request=float(field.get())
+    return request
 
 def do_plot():
     t0=[0,5,10,15,20,25,30]
     l0=[9.48,1.73,0.8,0.532,0.423,0.374,0.35]
     l1=[12.69,2.7,1.48,1.12,0.98,0.912,0.87]
     l2=[38.57,10.55,7.05,5.99,5.54,5.31,5.19]
-    if view.comboExample.get()=="100":
+    if view.combo_exsample_gas_material.get()=="Сталь":
         x=t0
         y=l0
         try:
@@ -29,7 +86,7 @@ def do_plot():
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
             view.message_error(["Error", "Где-то ошибка"])
-    if view.comboExample.get()=="1000":
+    if view.combo_exsample_gas_material.get()=="1000":
         x=t0
         y=l1
         try:
@@ -40,7 +97,7 @@ def do_plot():
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
             view.message_error(["Error", "Где-то ошибка"])
-    if view.comboExample.get()=="10000":
+    if view.combo_exsample_gas_material.get()=="Полиэтилен":
         x=t0
         y=l2
         try:
