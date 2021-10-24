@@ -53,7 +53,6 @@ def do_plot():
             view.message_error(["Error", "Где-то ошибка"])
 
 # Эксплуатационные затраты на обслуживание ГРП
-
 def Q_year(need_city):
     return need_city/12185.4
 
