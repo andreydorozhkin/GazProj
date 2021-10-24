@@ -16,7 +16,7 @@ ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 
 #Визуальный метод определния материала
 def changeMaterials():
-   comboExample["values"] = [ "Сталь", "Аллюминий"]
+   comboExample["values"] = ["100", "1000", "10000"]
 
 #Вывод ошибок
 def message_info(message):
@@ -50,7 +50,7 @@ unit_cost_liquefaction_complex = generate_field("Удельные затраты
 initial_distance = generate_field("Начальное расстояние до населенного пункта. км", X1, mass[2], X2, mass[2])
 inhabitants = generate_field("Число жителей в снабжаемом городе. тыс. чел.", X1, mass[3], X2, mass[3])
 acceptable_losses = generate_field("Допустимые потери давления газопроводе, МПа", X1, mass[4], X2, mass[4])
-gas_material = generate_field("Материал газопровода", X1, mass[5], X2, mass[5])
+#gas_material = generate_field("Материал газопровода", X1, mass[5], X2, mass[5])
 average_gas_pressure = generate_field("Усредненное давление газа (абсолютное) в сети. МПф", X1, mass[6], X2, mass[6])
 specific_cost_gas_pipeline = generate_field("Удельная стоимость газопровода руб/км", X1, mass[7], X2, mass[7])
 cost_natural_gas = generate_field("Стоимость ПГ. (руб/(МВт*ч))", X1, mass[8], X2, mass[8])
@@ -74,7 +74,7 @@ discount_coef = generate_field("Коэффициент дисконтирова�
 step_increasing_energy_consumption = generate_field("Шаг увеличения энергопотребления, МВт", X1, mass[26], X2, mass[26])
 
 comboExample = ttk.Combobox(root, 
-                            values=[],
+                            values=["100", "1000", "10000"],
                             postcommand=changeMaterials, width=17)
 comboExample.place(x=X2, y=mass[5])
 
