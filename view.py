@@ -12,7 +12,7 @@ frame1 = Frame(root); frame1.place(x=0, y=0, width=700, height=650)
 figure = plt.Figure(figsize=(5,5), facecolor='white')
 canvas = FigureCanvasTkAgg(figure, frame1)
 canvas.get_tk_widget().place(x=10,y=10,width=700,height=650)
-ax = [figure.add_subplot(2,1,x+1)for x in range(2)]
+ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 
 #Визуальный метод определния материала
 def changeMaterials():
