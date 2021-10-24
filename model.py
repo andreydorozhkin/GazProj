@@ -57,9 +57,9 @@ def do_plot():
 def Q_year(need_city):
     return need_city/12185.4
 
+# Эксплуатационны затраты на ШГРП
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
-
 
 # Мощность газификатора
 def power_gazif():
