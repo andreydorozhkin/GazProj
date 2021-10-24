@@ -12,176 +12,71 @@ frame1 = Frame(root); frame1.place(x=0, y=0, width=700, height=650)
 figure = plt.Figure(figsize=(5,5), facecolor='white')
 canvas = FigureCanvasTkAgg(figure, frame1)
 canvas.get_tk_widget().place(x=10,y=10,width=700,height=650)
-ax = [figure.add_subplot(1, 1, x+1) for x in range(1)]
+ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 
 #Визуальный метод определния материала
 def changeMaterials():
-    comboExample["values"] = [ "Сталь", "Аллюминий"]
+   comboExample["values"] = [ "Сталь", "Аллюминий"]
 
 #Вывод ошибок
-def message_info(x):
-    messagebox.showinfo(x[0],x[1]) 
-def message_ask(x):
-    messagebox.askquestion(x[0],x[1])
-def message_error(x):
-    messagebox.showerror(x[0], x[1])
+def message_info(message):
+    messagebox.showinfo(message[0],message[1]) 
+def message_ask(message):
+    messagebox.askquestion(message[0],message[1])
+def message_error(message):
+    messagebox.showerror(message[0], message[1])
 
+def generate_coordinat(a, b, c):
+    coordinat=[]
+    while c!=a:
+        c+=1
+        coordinat=coordinat+[b]
+        b=b+25
+    return coordinat
 
-a=30
-b=5
-c=0
-mass=[]
-while c!=a:
-    c+=1
-    mass=mass+[b]
-    b=b+25
+def generate_field(name_field, x_label, y_label, x_entry, y_entry):
+    lab = Label(root, text=name_field)
+    lab.place(x=x_label, y=y_label)
+    text = Entry(root, width=20)
+    text.place(x=x_entry, y=y_entry)
+    return text
+
+mass=generate_coordinat(30, 5, 0)
 X1=710
 X2=1150
 
-lbl = Label(root, text="Начальное годовое энергопотребление объектом газификации. (МВт*ч)/год")  
-lbl.place(x=X1,y=mass[0])
-txt1 = Entry(root,width=20)  
-txt1.place(x=X2,y=mass[0])
+initial_enegry_consum = generate_field("Начальное годовое энергопотребление объектом газификации. (МВт*ч)/год", X1, mass[0], X2, mass[0])
+unit_cost_liquefaction_complex = generate_field("Удельные затраты на комплекс сжижения газа. (руб./(МВ*ч)))", X1, mass[1], X2, mass[1])
+initial_distance = generate_field("Начальное расстояние до населенного пункта. км", X1, mass[2], X2, mass[2])
+inhabitants = generate_field("Число жителей в снабжаемом городе. тыс. чел.", X1, mass[3], X2, mass[3])
+acceptable_losses = generate_field("Допустимые потери давления газопроводе, МПа", X1, mass[4], X2, mass[4])
+gas_material = generate_field("Материал газопровода", X1, mass[5], X2, mass[5])
+average_gas_pressure = generate_field("Усредненное давление газа (абсолютное) в сети. МПф", X1, mass[6], X2, mass[6])
+specific_cost_gas_pipeline = generate_field("Удельная стоимость газопровода руб/км", X1, mass[7], X2, mass[7])
+cost_natural_gas = generate_field("Стоимость ПГ. (руб/(МВт*ч))", X1, mass[8], X2, mass[8])
+specific_SGRP = generate_field("Удельная ШГРП (руб/МВт*ч)", X1, mass[9], X2, mass[9])
+cost_gas_pipeline_maintenance = generate_field("Стоимость обслуживания газопровода, (руб/км)/год", X1, mass[10], X2, mass[10])
+cost_maintenance_SHGRP = generate_field("Стоимость обслуживания ШГРП (руб/МВт*ч)", X1, mass[11], X2, mass[11])
+price_cistern_liquefied_natural_gas = generate_field("Цена цистерны СПГ, руб", X1, mass[12], X2, mass[12])
+volume_liquefied_natural_gas_cistern = generate_field("Объем цистерны СПГ, м3.", X1, mass[13], X2, mass[13])
+average_cistern_speed = generate_field("Средняя скорость цистерны СПГ, км/ч", X1, mass[14], X2, mass[14])
+price_liquefied_natural_gas_tank = generate_field("Цена резервуара СПГ, руб", X1, mass[15], X2, mass[15])
+volume_liquefied_natural_gas_tank = generate_field("Объем резервуара СПГ, м3", X1, mass[16], X2, mass[16])
+unit_cost_gasifier = generate_field("Удельная стоимость газификатора, руб/МВт*ч", X1, mass[17], X2, mass[17])
+cost_liquefied_natural_gas = generate_field("Стоимость СПГ, руб/ВТ*ч", X1, mass[18], X2, mass[18])
+unit_maintenance_cost_gas_liquefaction_facility = generate_field("Удельные затраты на обслуживание объекта по сжижению газа, руб/МВт*ч", X1, mass[19], X2, mass[19])
+сost_annual_maintenance_liquefied_natural_gas_cistern = generate_field("Стоимость годового обслуживания цистерны СПГ, руб", X1, mass[20], X2, mass[20])
+cost_annual_maintenance_liquefied_natural_gas_tank = generate_field("Стоимость годового обслуживания резервуара СПГ, руб", X1, mass[21], X2, mass[21])
+service_life_natural_gas_equipment = generate_field("Срок службы оборудования ПГ, лет", X1, mass[22], X2, mass[22])
+transition_period_liquefied_natural_gas = generate_field("Срок перехода с СПГ на ПГ, лет", X1, mass[23], X2, mass[23])
+cost_dismantling_liquefied_natural_gas_tank = generate_field("Стоимость демонтажа резервуара СПГ, руб", X1, mass[24], X2, mass[24])
+discount_coef = generate_field("Коэффициент дисконтирования 1/год", X1, mass[25], X2, mass[25])
+step_increasing_energy_consumption = generate_field("Шаг увеличения энергопотребления, МВт", X1, mass[26], X2, mass[26])
 
-lbl1 = Label(root, text="Удельные затраты на комплекс сжижения газа. (руб./(МВ*ч)))")  
-lbl1.place(x=X1,y=mass[1])  
-txt2 = Entry(root,width=20)  
-txt2.place(x=X2,y=mass[1])
-
-lbl1 = Label(root, text="Начальное расстояние до населенного пункта. км")  
-lbl1.place(x=X1,y=mass[2])  
-txt3 = Entry(root,width=20)  
-txt3.place(x=X2,y=mass[2])
-
-lbl1 = Label(root, text="Число жителей в снабжаемом городе. тыс. чел.")  
-lbl1.place(x=X1,y=mass[3])  
-txt4 = Entry(root,width=20)  
-txt4.place(x=X2,y=mass[3])
-
-lbl1 = Label(root, text="Допустимые потери давления газопроводе, МПа")  
-lbl1.place(x=X1,y=mass[4])  
-txt5 = Entry(root,width=20)  
-txt5.place(x=X2,y=mass[4])
-
-lbl1 = Label(root, text="Материал газопровода")  
-lbl1.place(x=X1,y=mass[5])
 comboExample = ttk.Combobox(root, 
                             values=[],
                             postcommand=changeMaterials, width=17)
 comboExample.place(x=X2, y=mass[5])
-
-
-lbl1 = Label(root, text="Усредненное давление газа (абсолютное) в сети. МПф")  
-lbl1.place(x=X1,y=mass[6])  
-txt7 = Entry(root,width=20)  
-txt7.place(x=X2,y=mass[6])
-
-lbl1 = Label(root, text="Удельная стоимость газопровода руб/км")  
-lbl1.place(x=X1,y=mass[7])  
-txt8 = Entry(root,width=20)  
-txt8.place(x=X2,y=mass[7])
-
-lbl1 = Label(root, text="Стоимость ПГ. (руб/(МВт*ч))")  
-lbl1.place(x=X1,y=mass[8])  
-txt9 = Entry(root,width=20)  
-txt9.place(x=X2,y=mass[8])
-
-lbl1 = Label(root, text="Удельная ШГРП (руб/МВт*ч)")  
-lbl1.place(x=X1,y=mass[9])  
-txt10 = Entry(root,width=20)  
-txt10.place(x=X2,y=mass[9])
-
-lbl1 = Label(root, text="Стоимость обслуживания газопровода, (руб/км)/год")  
-lbl1.place(x=X1,y=mass[10])  
-txt11 = Entry(root,width=20)  
-txt11.place(x=X2,y=mass[10])
-
-lbl1 = Label(root, text="Стоимость обслуживания ШГРП (руб/МВт*ч)")  
-lbl1.place(x=X1,y=mass[11])  
-txt12 = Entry(root,width=20)  
-txt12.place(x=X2,y=mass[11])
-
-lbl1 = Label(root, text="Цена цистерны СПГ, руб")  
-lbl1.place(x=X1,y=mass[12])  
-txt13 = Entry(root,width=20)  
-txt13.place(x=X2,y=mass[12])
-
-lbl1 = Label(root, text="Объем цистерны СПГ, м3")  
-lbl1.place(x=X1,y=mass[13])  
-txt14 = Entry(root,width=20)  
-txt14.place(x=X2,y=mass[13])
-
-lbl1 = Label(root, text="Средняя скорость цистерны СПГ, км/ч")  
-lbl1.place(x=X1,y=mass[14])  
-txt15 = Entry(root,width=20)  
-txt15.place(x=X2,y=mass[14])
-
-lbl1 = Label(root, text="Цена резервуара СПГ, руб")  
-lbl1.place(x=X1,y=mass[15])  
-txt16 = Entry(root,width=20)  
-txt16.place(x=X2,y=mass[15])
-
-lbl1 = Label(root, text="Объем резервуара СПГ, м3")  
-lbl1.place(x=X1,y=mass[16])  
-txt17 = Entry(root,width=20)  
-txt17.place(x=X2,y=mass[16])
-
-lbl1 = Label(root, text="Удельная стоимость газификатора, руб/МВт*ч")  
-lbl1.place(x=X1,y=mass[17])  
-txt18 = Entry(root,width=20)  
-txt18.place(x=X2,y=mass[17])
-
-lbl1 = Label(root, text="Стоимость СПГ, руб/ВТ*ч")  
-lbl1.place(x=X1,y=mass[18])  
-txt19 = Entry(root,width=20)  
-txt19.place(x=X2,y=mass[18])
-
-lbl1 = Label(root, text="Удельные затраты на обслуживание объекта по сжижению газа, руб/МВт*ч")  
-lbl1.place(x=X1,y=mass[19])  
-txt20 = Entry(root,width=20)  
-txt20.place(x=X2,y=mass[19])
-
-lbl1 = Label(root, text="Стоимость годового обслуживания цистерны СПГ, руб")  
-lbl1.place(x=X1,y=mass[20])  
-txt21 = Entry(root,width=20)  
-txt21.place(x=X2,y=mass[20])
-
-lbl1 = Label(root, text="Стоимость годового обслуживания резервуара СПГ, руб")  
-lbl1.place(x=X1,y=mass[21])  
-txt22 = Entry(root,width=20)  
-txt22.place(x=X2,y=mass[21])
-
-lbl1 = Label(root, text="Срок службы оборудования ПГ, лет")  
-lbl1.place(x=X1,y=mass[22])  
-txt23 = Entry(root,width=20)  
-txt23.place(x=X2,y=mass[22])
-
-lbl1 = Label(root, text="Срок перехода с СПГ на ПГ, лет")  
-lbl1.place(x=X1,y=mass[23])  
-txt24 = Entry(root,width=20)  
-txt24.place(x=X2,y=mass[23])
-
-lbl1 = Label(root, text="Стоимость демонтажа резервуара СПГ, руб")  
-lbl1.place(x=X1,y=mass[24])  
-txt25 = Entry(root,width=20)  
-txt25.place(x=X2,y=mass[24])
-
-lbl1 = Label(root, text="Коэффициент дисконтирования 1/год")  
-lbl1.place(x=X1,y=mass[25])  
-txt26 = Entry(root,width=20)  
-txt26.place(x=X2,y=mass[25])
-
-lbl1 = Label(root, text="Шаг увеличения энергопотребления, МВт")  
-lbl1.place(x=X1,y=mass[26])  
-txt27 = Entry(root,width=20)  
-txt27.place(x=X2,y=mass[26])
-
-message_mass=["Result","Результат в консоли = ",
-                  "Request!", "Нет ошибки, график отрисован?",
-                  "Error", "AMOGUS, кто то ввел не число",
-                  "Error", "Где-то ошибка"]
-
-
 
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
