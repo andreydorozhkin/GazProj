@@ -72,8 +72,6 @@ combo_exsample_gas_material = ttk.Combobox(root,
                            postcommand=changeMaterials, width=17)
 combo_exsample_gas_material.place(x=X2, y=mass[16])
 
-num19 = Label(root, text="СЕРГЕЙ, ВЫ ЕБЛАН!", background="red")  
-num19.place(x=X1,y=mass[19])
 
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
