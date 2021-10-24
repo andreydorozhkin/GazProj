@@ -1,6 +1,7 @@
 from numpy.lib.financial import rate
 import view
 import numpy as np
+import math
 def sum():
     try:
         num1=int(view.initial_enegry_consum.get())
@@ -55,11 +56,23 @@ def do_plot():
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
 
+# Капитальные затраты на хранилища
+def capital_costs_gazif(Q_year, power_gazif, cost_gazif):
+    capital=math.ceil(Q_year/power_gazif/365/24)
+    capital*=cost_gazif
+    return capital
+# Капитальные затраты на хранилища
+def capital_costs_storage(num_storage, cost_storage):
+    return num_storage * cost_storage
+
+# Эксплуатационные затраты на хранилища
+def operating_costs_storage(K_chsw):
+    return K_chsw*0.5/100
 
 # Эксплутационные расходы по доставке СПГ
-def operating_costs_spg(N_cist, N_chw, N_gazif, N_ksg, Q_year, a):
+def operating_costs_spg(N_cist, N_schw, N_gazif, N_ksg, Q_year, a):
     numerator = Q_year * a/0.9
-    costs = numerator + N_ksg + N_cist + N_chw + N_gazif
+    costs = numerator + N_cist + N_ksg  + N_schw + N_gazif
     return costs
 
 # Коэффциент дисконтирования (вместо t_cl может прийти t0)
@@ -75,7 +88,7 @@ def liquidation_value(K_ksg, K_cist, K_khsv, K_gazif, t0, t_cl, K_hswd):
     return one_mltpr
 
 # Расчет критического радиуса
-def critical_distance(Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
+def critical_distance(discount_rate(30, 0.1),  operating_costs_spg(1, operating_costs_storage(capital_costs_storage(1, 4049849,86)),  ), Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
     one_mltpr = Y_tcl * N_spg
     two_mltpr = Y_t0*(N_spg+K_shgrp-L_spg)
     three_mltpr_1 = Y_tcl-Y_t0
@@ -86,4 +99,6 @@ def critical_distance(Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_
     denominator = K_ud*denominator_2
     distance = numerator/denominator
     return distance
-    
+
+
+
