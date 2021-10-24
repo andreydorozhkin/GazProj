@@ -1,5 +1,5 @@
+import model
 from tkinter import *
-import numpy as np
 from tkinter import messagebox
 import tkinter as tk
 from tkinter import ttk
@@ -8,21 +8,15 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 root = tk.Tk()
 root.geometry('1300x800')
-
-def changeMaterials():
-    comboExample["values"] = [  
-                                ]
-
-def do_plot(x, y):
-    [ax[x].clear() for x in range(1)]
-    ax[0].plot(x,y)
-    canvas.draw()
-
 frame1 = Frame(root); frame1.place(x=0, y=0, width=700, height=650)
 figure = plt.Figure(figsize=(5,5), facecolor='white')
 canvas = FigureCanvasTkAgg(figure, frame1)
 canvas.get_tk_widget().place(x=10,y=10,width=700,height=650)
 ax = [figure.add_subplot(1, 1, x+1) for x in range(1)]
+
+#Визуальный метод определния материала
+def changeMaterials():
+    comboExample["values"] = [ "Сталь", "Аллюминий"]
 
 a=30
 b=5
@@ -34,7 +28,7 @@ while c!=a:
     b=b+25
 X1=710
 X2=1150
-print(mass)
+
 lbl = Label(root, text="Начальное годовое энергопотребление объектом газификации. (МВт*ч)/год")  
 lbl.place(x=X1,y=mass[0])
 txt1 = Entry(root,width=20)  
@@ -63,8 +57,7 @@ txt5.place(x=X2,y=mass[4])
 lbl1 = Label(root, text="Материал газопровода")  
 lbl1.place(x=X1,y=mass[5])
 comboExample = ttk.Combobox(root, 
-                            values=[
-                                    ],
+                            values=[],
                             postcommand=changeMaterials, width=17)
 comboExample.place(x=X2, y=mass[5])
 
@@ -174,76 +167,23 @@ lbl1.place(x=X1,y=mass[26])
 txt27 = Entry(root,width=20)  
 txt27.place(x=X2,y=mass[26])
 
-mass1=[0,3,1.5,0,3,4.5,4.5,3.5,4.5,5.5,4.5,4.5,6,6,6,8,8]
-mass2=[0,6,3,6,0,0,3,6,3,6,3,0,0,6,0,6,0]
-btplot1 = Button(root, text='Рассчитать',         # текст кнопки 
+
+
+btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
                  background="#7F7F7F",     # фоновый цвет кнопки
                  foreground="#F2F2F2",     # цвет текста
-                 padx="20",             # отступ от границ до содержимого по горизонтали
-                 pady="8",              # отступ от границ до содержимого по вертикали
-                 font="16", command= lambda: do_plot(mass1,
-                                                     mass2))
+                 padx="20",                # отступ от границ до содержимого по горизонтали
+                 pady="8",                 # отступ от границ до содержимого по вертикали
+                 font="16", command=lambda: model.do_plot)
 btplot1.place(x=430, y=650, width=100, height=40)
-
-num1=()
-num2=()
-num3=int()
-num4=int()
-num5=int()
-num6=str()
-num7=int()
-num8=int()
-num9=int()
-num10=int()
-num11=int()
-num12=int()
-num13=int()
-num14=int()
-num15=int()
-num16=int()
-num17=int()
-num18=int()
-num19=int()
-num20=int()
-num21=int()
-num23=int()
-num24=int()
-num25=int()
-num26=int()
-num27=int()
-
-def suum():
-    try:
-        num1=int(txt1.get())
-        num2=int(txt2.get())
-        num3=(comboExample.get())
-        #if type(num1 or num2) == int or type(num1 or num2) == float:
-        print (num1+num2+10)
-    except:
-        messagebox.showinfo("GUI Python", "Бл, тут АМОГУС, кто то ввел не число")
-        
-        
 
 btplot2=Button(root, text="Сумма первых 2ух полей в бокс",
                background="#7F7F7F",     # фоновый цвет кнопки
-                 foreground="#F2F2F2",     # цвет текста
-                 padx="20",             # отступ от границ до содержимого по горизонтали
-                 pady="8",              # отступ от границ до содержимого по вертикали
-                 font="16", command=suum)
+                 foreground="#F2F2F2",   # цвет текста
+                 padx="20",              # отступ от границ до содержимого по горизонтали
+                 pady="8",               # отступ от границ до содержимого по вертикали
+                 font="16", command=model.suum)
 btplot2.place(x=1, y=650, width=400, height=40)
 
 
-
-
-
 root.mainloop()
-
-def k(s):
-    x=int()
-    y=int()
-    e=int()
-    m=int()
-
-
-
-
