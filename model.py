@@ -13,7 +13,7 @@ def sum():
 
 def do_plot():
     x=[0,28,30]
-    y=[105,65,0]
+    y=[200,135,0]
     try:
         [view.ax[x].clear() for x in range(1)]
         view.ax[0].plot(x,y)
