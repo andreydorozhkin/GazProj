@@ -75,12 +75,12 @@ combo_exsample_gas_material.place(x=X2, y=mass[16])
 
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
-                 background="#7F7F7F",     # фоновый цвет кнопки
-                 foreground="#F2F2F2",     # цвет текста
+                 background="#72D0F2",     # фоновый цвет кнопки
+                 foreground="black",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
-                 font="16", command= lambda: model.do_plot())
-btplot1.place(x=430, y=650, width=100, height=40)
+                 font='Tahoma 20', command= lambda: model.do_plot())
+btplot1.place(x=X1, y=mass[20], width=150, height=60)
 
 
 
