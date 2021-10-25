@@ -60,8 +60,8 @@ def capital_costs_ksg(Q, cost_liquid_gaz):
     return costs
 
 # капитальные вложения в систему газоснабжения объекта СПГ
-def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif):
-    costs = K_ksg+K_cist+K_khsv+K_gazif
+def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif, K_tank): # Я Добавил параметр стоимость хранилища
+    costs = K_ksg+K_cist+K_khsv+K_gazif+K_tank
     return costs
 
 # Капитальные затраты на цистерны
@@ -70,15 +70,15 @@ def capital_costs_tank(number, cost):
 
 # Эксплуатационные затраты на обслуживание ГРП
 def Q_year(need_city):
-    q = need_city/12185.4 
+    q = need_city/12185.4
     return q
 
 # Эксплуатационны затраты на ШГРП
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
 #Капитальные затраты на газораспределительные шкафы
-def capital_cost_GRPSH(Q_y):
-    cap_GRPSH=(19,35906314*Q_y*1380)/1800
+def capital_cost_GRPSH(Q):
+    cap_GRPSH=(19.35906314*Q*1380)/1800  #Q_y-Это список
     return cap_GRPSH
 
 # Мощность газификатора
@@ -137,21 +137,21 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
 
 def diametr(Q0):
     P_ud = 0.25/(1.1*field_getter(view.factory_distance)*1000)
-    p0 = 0,101325
-    A=0.101325/0.6*162*(pow(3.14))
+    p0 = 0.101325
+    A=0.101325/0.6*162*(pow(3.14,2))
     material_steel=[0.022, 2, 5] 
     material_polyethylene=[0.0446, 1.75, 4.75]  #A,m1,m2
-    if view.comboExample.get()=="Сталь":
+    if view.combo_exsample_gas_material.get()=="Сталь":
         B=material_steel[0]
         m=material_steel[1]
         m1=material_steel[2]
-    if view.comboExample.get()=="Полиэтилен":
+    if view.combo_exsample_gas_material.get()=="Полиэтилен":
         B=material_polyethylene[0]
         m=material_polyethylene[1]
         m1=material_polyethylene[2]
     else:
         pass
-    dp=(A*B*p0*(Q0**m))/P_ud
+    dp=(A*B*p0*(pow(Q0,m)))/P_ud
     x=dp
     y=m1
     dp=pow(x,(1/y))
@@ -184,19 +184,19 @@ def finding_K(dp):
     return money   
 
 # def critical():
-#   answer = str(type(field_getter(view.cost_gas)))
-#    view.message_info(["Request!", "Ответ: " + answer])
+#     answer = str((field_getter(view.cost_natur_liquided_gas)))
+#     view.message_info(["Request!", "Ответ: " + answer])
 
 def critical():
     t_cl=30
     t0=1
-    CityYear = Q_year(view.city_need_energy)
+    CityYear = Q_year(field_getter(view.city_need_energy))
     K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank))
     K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers))
     a = field_getter(view.cost_natur_liquided_gas)
     K_ksg = capital_costs_ksg(CityYear, a)
     K_cist = capital_costs_tank(field_getter(view.number_cistern), field_getter(view.cost_cistern))
-    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank), 
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank),   #функция имеет 4 параметра
                               K_gazif)
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
