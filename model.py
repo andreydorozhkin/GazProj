@@ -5,72 +5,8 @@ import math
 import sys
 import os
 
-def cost_gas(field):
-    request=float(field.get())
-    return request
-    
-def cost_natur_liquided_gas(field):
-    request=float(field.get())
-    return request
-
-def city_need_energy(field):
-    request=float(field.get())
-    return request
-
-def cost_cistern(field):
-    request=float(field.get())
-    return request
-
-def volume_cistern(field):
-    request=float(field.get())
-    return request
-
-def number_cistern(field):
-    request=float(field.get())
-    return request
-
-def cost_tank(field):
-    request=float(field.get())
-    return request
-
-def number_tank(field):
-    request=float(field.get())
-    return request
-
-def cost_gasifiers(field):
-    request=float(field.get())
-    return request
-
-def cost_laying_high(field):
-    request=float(field.get())
-    return request
-
-def cost_laying_medium(field):
-    request=float(field.get())
-    return request
-
-def cost_GRPSH(field):
-    request=float(field.get())
-    return request
-
-def efficiency_GRPSH(field):
-    request=float(field.get())
-    return request
-
-def cost_maintenance_GRPSH(field):
-    request=float(field.get())
-    return request
-
-def cost_maintenance_gas_pipeline(field):
-    request=float(field.get())
-    return request
-
-def cost_maintenance_gas_pipeline(field):
-    request=float(field.get())
-    return request
-
-def gas_material(field):
-    request=float(field.get())
+def field_getter(field):
+    request=field.get()
     return request
 
 def clear():
@@ -119,8 +55,8 @@ def do_plot():
 
 
 # Капитальные затраты на комплекс по сжижению газа
-def capital_costs_ksg(C_spg, cost_liquid_gaz):
-    costs = 2 * C_spg * cost_liquid_gaz
+def capital_costs_ksg(Q, cost_liquid_gaz):
+    costs = 2 * Q * cost_liquid_gaz
     return costs
 
 # капитальные вложения в систему газоснабжения объекта СПГ
@@ -134,11 +70,16 @@ def capital_costs_tank(number, cost):
 
 # Эксплуатационные затраты на обслуживание ГРП
 def Q_year(need_city):
-    return need_city/12185.4
+    q = need_city/12185.4 
+    return q
 
 # Эксплуатационны затраты на ШГРП
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
+#Капитальные затраты на газораспределительные шкафы
+def capital_cost_GRPSH(Q_y):
+    cap_GRPSH=(19,35906314*Q_y*1380)/1800
+    return cap_GRPSH
 
 # Мощность газификатора
 def power_gazif():
@@ -193,11 +134,11 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
     distance = numerator/denominator
     return distance
 
-def coof_A(Pm):
-    A=0.101325/Pm*162*(pow(3.14))
-    return A
 
-def diametr(A,p0,Q0,P_ud):
+def diametr(Q0):
+    P_ud = 0.25/(1.1*field_getter(view.factory_distance)*1000)
+    p0 = 0,101325
+    A=0.101325/0.6*162*(pow(3.14))
     material_steel=[0.022, 2, 5] 
     material_polyethylene=[0.0446, 1.75, 4.75]  #A,m1,m2
     if view.comboExample.get()=="Сталь":
@@ -241,3 +182,31 @@ def finding_K(dp):
     K_ud=K_mass[ind]
     money=mass[ind]
     return money   
+
+def critical():
+    answer = str(type(field_getter(view.cost_gas)))
+    view.message_info(["Request!", "Ответ: " + answer])
+def Dcritical():
+    t_cl=30
+    t0=1
+    CityYear = Q_year(view.city_need_energy)
+    K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank))
+    K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers))
+    a = field_getter(view.cost_natur_liquided_gas)
+    K_ksg = capital_costs_ksg(CityYear, a)
+    K_cist = capital_costs_tank(field_getter(view.number_cistern), field_getter(view.cost_cistern))
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank), 
+                              K_gazif)
+    Y_tcl = discount_rate(t_cl, 0.1)
+    Y_t0 = discount_rate(t0, 0.1)
+    N_spg = operating_costs_spg(1, operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
+                                capital_costs_ksg(CityYear, a), CityYear, a)
+    K_shgrp = capital_cost_GRPSH(CityYear)
+    L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, 1, t_cl, 40000)
+    C_pg = field_getter(view.cost_gas)   
+    kpd = 0.9
+    N_shgrp = operating_cost_shgrp(K_shgrp)  
+    K_ud = finding_K(diametr(CityYear))
+    answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
+    view.message_ask(["Request!", "Ответ: " + answer]) 
+
