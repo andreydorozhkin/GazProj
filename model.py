@@ -198,6 +198,7 @@ def diametr(A,p0,Q0,P_ud):
 #Нахождение К-удельное
 def finding_K(dp):
     K_mass=[80,100,150,200,250,300] #Список удельных К
+    mass=[4864.558, 5756.494, 6110.114, 7401.794, 8427.619, 10360.698  ]
     array_difference=[]
     K_ud=float()
     for i in K_mass:
@@ -211,8 +212,10 @@ def finding_K(dp):
         smallest_number = min(array_difference)
         ind=array_difference.index(smallest_number)
         K_ud=K_mass[ind+1]
-        return K_ud
+        money=mass[ind+1]
+        return money
     smallest_number = min(array_difference)
     ind=array_difference.index(smallest_number)
     K_ud=K_mass[ind]
-    return K_ud  
+    money=mass[ind]
+    return money   
