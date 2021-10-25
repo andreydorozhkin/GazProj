@@ -194,8 +194,10 @@ def diametr(A,p0,Q0,P_ud):
     dp=pow(x,(1/y))
     return dp
 
+
+#Нахождение К-удельное
 def finding_K(dp):
-    K_mass=[80,100,150,200,250,300]
+    K_mass=[80,100,150,200,250,300] #Список удельных К
     array_difference=[]
     K_ud=float()
     for i in K_mass:
