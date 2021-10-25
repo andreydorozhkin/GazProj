@@ -110,6 +110,21 @@ def do_plot():
         except:
             view.message_error(["Error", "Где-то ошибка"])
 
+
+# Капитальные затраты на комплекс по сжижению газа
+def capital_costs_ksg(C_spg, cost_liquid_gaz):
+    costs = 2 * C_spg * cost_liquid_gaz
+    return costs
+
+# капитальные вложения в систему газоснабжения объекта СПГ
+def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif):
+    costs = K_ksg+K_cist+K_khsv+K_gazif
+    return costs
+
+# Капитальные затраты на цистерны
+def capital_costs_tank(number, cost):
+    return number*cost
+
 # Эксплуатационные затраты на обслуживание ГРП
 def Q_year(need_city):
     return need_city/12185.4
