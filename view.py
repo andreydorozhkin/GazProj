@@ -64,13 +64,14 @@ cost_GRPSH = generate_field("Стоимость ГРПШ", X1, mass[12], X2, mas
 efficiency_GRPSH = generate_field("Производительность ГРПШ", X1, mass[13], X2, mass[13])
 cost_maintenance_GRPSH = generate_field("Стоимость обслуживания ГРПШ", X1, mass[14], X2, mass[14])
 cost_maintenance_gas_pipeline = generate_field("Стоимость обслуживания газопровода", X1, mass[15], X2, mass[15])
-gas_material = Label(root, text="Материал газопровода", background="white")  
-gas_material.place(x=X1,y=mass[16])
+factory_distance=generate_field("Расстояние от завода до города", X1, mass[16], X2, mass[16])
+gas_material = Label(root, text="Материал газопровода", background="white") 
+gas_material.place(x=X1,y=mass[17])
 
 combo_exsample_gas_material = ttk.Combobox(root, 
                            values=["Сталь", "Полиэтилен"],
                            postcommand=changeMaterials, width=17)
-combo_exsample_gas_material.place(x=X2, y=mass[16])
+combo_exsample_gas_material.place(x=X2, y=mass[17])
 
 
 
@@ -80,7 +81,7 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 20', command= lambda: model.do_plot())
-btplot1.place(x=X1, y=mass[18], width=150, height=60)
+btplot1.place(x=X1, y=mass[19], width=150, height=60)
 
 btplot2 = Button(root, text='Очистить',  # текст кнопки 
                  background="#72D0F2",     # фоновый цвет кнопки
@@ -88,7 +89,7 @@ btplot2 = Button(root, text='Очистить',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 20', command= lambda: model.clear())
-btplot2.place(x=X1, y=mass[21], width=150, height=60)
+btplot2.place(x=X1, y=mass[22], width=150, height=60)
 
 btplot3 = Button(root, text='Critical',  # текст кнопки 
                  background="#72D0F2",     # фоновый цвет кнопки
@@ -96,7 +97,7 @@ btplot3 = Button(root, text='Critical',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 20' )#command = critical())
-btplot3.place(x=X1, y=mass[24], width=150, height=60)
+btplot3.place(x=X1, y=mass[25], width=150, height=60)
 
 
 root.mainloop()
