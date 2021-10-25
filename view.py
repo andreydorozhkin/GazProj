@@ -18,7 +18,7 @@ ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 
 #Визуальный метод определния материала
 def changeMaterials():
-   combo_exsample_gas_material["values"] = ["Сталь", "Полиэтилен", "Чугун"]
+   combo_exsample_gas_material["values"] = ["Сталь", "Полиэтилен"]
 
 #Вывод ошибок
 def message_info(message):
@@ -48,27 +48,27 @@ X1=710
 X2=1150
 
 
-num1 = generate_field("Стоимость газа", X1, mass[0], X2, mass[0])
-num2 = generate_field("Стоимость СПГ", X1, mass[1], X2, mass[1])
-num3 = generate_field("Потребность города в КВТ", X1, mass[2], X2, mass[2])
-num4 = generate_field("Стоимость автомобильной цистерны", X1, mass[3], X2, mass[3])
-num5 = generate_field("Объем автомобильной цистерны", X1, mass[4], X2, mass[4])
-num6 = generate_field("Колличество цистерн ", X1, mass[5], X2, mass[5])
-num7 = generate_field("Стоимость хранилища СПГ", X1, mass[6], X2, mass[6])
-num8 = generate_field("Объем хранилища СПГ", X1, mass[7], X2, mass[7])
-num9 = generate_field("Колличество хранилищ )", X1, mass[8], X2, mass[8])
-num10 = generate_field("Стоимость газификаторов ", X1, mass[9], X2, mass[9])
-num11 = generate_field("Стоимость прокладки газопровода высокого давления на километр", X1, mass[10], X2, mass[10])
-num12= generate_field("Стоимость прокладки газопровода среднего давления на километр", X1, mass[11], X2, mass[11])
-num13 = generate_field("Стоимость ГРПШ", X1, mass[12], X2, mass[12])
-num14 = generate_field("Производительность ГРПШ", X1, mass[13], X2, mass[13])
-num15 = generate_field("Стоимость обслуживания ГРПШ", X1, mass[14], X2, mass[14])
-num16 = generate_field("Стоимость обслуживания газопровода", X1, mass[15], X2, mass[15])
-num17 = Label(root, text="Материал газопровода", background="white")  
-num17.place(x=X1,y=mass[16])
+cost_gas = generate_field("Стоимость газа", X1, mass[0], X2, mass[0])
+cost_natur_liquided_gas = generate_field("Стоимость СПГ", X1, mass[1], X2, mass[1])
+city_need_energy = generate_field("Потребность города в КВТ", X1, mass[2], X2, mass[2])
+cost_cistern = generate_field("Стоимость автомобильной цистерны", X1, mass[3], X2, mass[3])
+volume_cistern = generate_field("Объем автомобильной цистерны", X1, mass[4], X2, mass[4])
+number_cistern = generate_field("Колличество цистерн ", X1, mass[5], X2, mass[5])
+cost_tank = generate_field("Стоимость хранилища СПГ", X1, mass[6], X2, mass[6])
+volume_tank = generate_field("Объем хранилища СПГ", X1, mass[7], X2, mass[7])
+number_tank = generate_field("Колличество хранилищ )", X1, mass[8], X2, mass[8])
+cost_gasifiers = generate_field("Стоимость газификаторов ", X1, mass[9], X2, mass[9])
+cost_laying_high = generate_field("Стоимость прокладки газопровода высокого давления на километр", X1, mass[10], X2, mass[10])
+cost_laying_medium= generate_field("Стоимость прокладки газопровода среднего давления на километр", X1, mass[11], X2, mass[11])
+cost_GRPSH = generate_field("Стоимость ГРПШ", X1, mass[12], X2, mass[12])
+efficiency_GRPSH = generate_field("Производительность ГРПШ", X1, mass[13], X2, mass[13])
+cost_maintenance_GRPSH = generate_field("Стоимость обслуживания ГРПШ", X1, mass[14], X2, mass[14])
+cost_maintenance_gas_pipeline = generate_field("Стоимость обслуживания газопровода", X1, mass[15], X2, mass[15])
+gas_material = Label(root, text="Материал газопровода", background="white")  
+gas_material.place(x=X1,y=mass[16])
 
 combo_exsample_gas_material = ttk.Combobox(root, 
-                           values=["Сталь", "Полиэтилен", "Чугун"],
+                           values=["Сталь", "Полиэтилен"],
                            postcommand=changeMaterials, width=17)
 combo_exsample_gas_material.place(x=X2, y=mass[16])
 
@@ -82,12 +82,21 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  font='Tahoma 20', command= lambda: model.do_plot())
 btplot1.place(x=X1, y=mass[20], width=150, height=60)
 
-btplot1 = Button(root, text='Очистить',  # текст кнопки 
+btplot2 = Button(root, text='Очистить',  # текст кнопки 
                  background="#72D0F2",     # фоновый цвет кнопки
                  foreground="black",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 20', command= lambda: model.clear())
-btplot1.place(x=X1, y=mass[23], width=150, height=60)
+btplot2.place(x=X1, y=mass[23], width=150, height=60)
+
+btplot3 = Button(root, text='Очистить',  # текст кнопки 
+                 background="#72D0F2",     # фоновый цвет кнопки
+                 foreground="black",     # цвет текста
+                 padx="20",                # отступ от границ до содержимого по горизонтали
+                 pady="8",                 # отступ от границ до содержимого по вертикали
+                 font='Tahoma 20', command = model.critical())
+btplot3.place(x=X1, y=mass[23], width=150, height=60)
+
 
 root.mainloop()
