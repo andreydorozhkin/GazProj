@@ -202,9 +202,9 @@ def finding_K(dp):
     K_ud=float()
     for i in K_mass:
         if i>=dp:
-            array_difference=array_difference+[i-d]
+            array_difference=array_difference+[i-dp]
         if i<=dp:
-            array_difference=array_difference+[d-i]
+            array_difference=array_difference+[dp-i]
     mylist = array_difference
     doubles=[k for k,v in Counter(mylist).items() if v>1]
     if len(doubles)==1:
