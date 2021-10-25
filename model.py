@@ -6,7 +6,7 @@ import sys
 import os
 
 def field_getter(field):
-    request=field.get()
+    request=float(field.get())
     return request
 
 def clear():
@@ -183,11 +183,11 @@ def finding_K(dp):
     money=mass[ind]
     return money   
 
+# def critical():
+#   answer = str(type(field_getter(view.cost_gas)))
+#    view.message_info(["Request!", "Ответ: " + answer])
+
 def critical():
-    answer = str(type(field_getter(view.cost_gas)))
-    view.message_info(["Request!", "Ответ: " + answer])
-    
-def Dcritical():
     t_cl=30
     t0=1
     CityYear = Q_year(view.city_need_energy)
