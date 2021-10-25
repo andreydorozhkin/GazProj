@@ -186,6 +186,7 @@ def finding_K(dp):
 def critical():
     answer = str(type(field_getter(view.cost_gas)))
     view.message_info(["Request!", "Ответ: " + answer])
+    
 def Dcritical():
     t_cl=30
     t0=1
