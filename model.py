@@ -73,7 +73,7 @@ def gas_material(field):
 
 def clear():
     [view.ax[x].clear() for x in range(1)]
-    view.figure.legend(loc="upper.left")
+    view.ax.get_legend().remove()
     view.canvas.draw()
 
 def do_plot():
@@ -85,7 +85,7 @@ def do_plot():
         x=t0
         y=l0
         try:
-            [view.ax[x].clear() for x in range(1)]
+            #[view.ax[x].clear() for x in range(1)]
             view.ax[0].plot(x,y, color="red",label="Q=100" )
             view.figure.legend(loc = "upper left")
             view.canvas.draw()
