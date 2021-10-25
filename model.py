@@ -2,6 +2,8 @@ from collections import Counter
 import view
 import numpy as np
 import math
+import sys
+import os
 
 def cost_gas(field):
     request=float(field.get())
@@ -72,9 +74,8 @@ def gas_material(field):
     return request
 
 def clear():
-    [view.ax[x].clear() for x in range(1)]
-    view.ax.get_legend().remove()
-    view.canvas.draw()
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
 
 def do_plot():
     t0=[0,5,10,15,20,25,30]
@@ -86,13 +87,14 @@ def do_plot():
         y=l0
         try:
             #[view.ax[x].clear() for x in range(1)]
+            view.figure.legend().remove()
             view.ax[0].plot(x,y, color="red",label="Q=100" )
             view.figure.legend(loc = "upper left")
             view.canvas.draw()
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
             view.message_error(["Error", "Где-то ошибка"])
-    if view.combo_exsample_gas_material.get()=="1000":
+    if view.combo_exsample_gas_material.get()=="Чугун":
         x=t0
         y=l1
         try:
