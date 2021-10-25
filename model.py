@@ -159,13 +159,13 @@ def liquidation_value(K_ksg, K_cist, K_khsv, K_gazif, t0, t_cl, K_hswd):
     return one_mltpr
 
 # Расчет критического радиуса
-def critical_distance(Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
+def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
     one_mltpr = Y_tcl * N_spg
     two_mltpr = Y_t0*(N_spg+K_shgrp-L_spg)
     three_mltpr_1 = Y_tcl-Y_t0
     three_mltpr_2 = (C_pg*Q_year)/kpd+N_shgrp
     three_mltpr = three_mltpr_1*three_mltpr_2
-    numerator = one_mltpr-two_mltpr-three_mltpr
+    numerator = K_spg+one_mltpr-two_mltpr-three_mltpr
     denominator_2 = Y_t0+(Y_tcl-Y_t0)/(4*t_cl)
     denominator = K_ud*denominator_2
     distance = numerator/denominator
