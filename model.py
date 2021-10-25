@@ -71,6 +71,11 @@ def gas_material(field):
     request=float(field.get())
     return request
 
+def clear():
+    [view.ax[x].clear() for x in range(1)]
+    view.figure.legend(loc="upper.left")
+    view.canvas.draw()
+
 def do_plot():
     t0=[0,5,10,15,20,25,30]
     l0=[9.48,1.73,0.8,0.532,0.423,0.374,0.35]
