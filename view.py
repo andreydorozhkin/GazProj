@@ -18,7 +18,7 @@ ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 
 #Визуальный метод определния материала
 def changeMaterials():
-   combo_exsample_gas_material["values"] = ["Сталь", "Полиэтилен"]
+   combo_exsample_gas_material["values"] = ["Сталь", "Полиэтилен", "Чугун"]
 
 #Вывод ошибок
 def message_info(message):
@@ -68,7 +68,7 @@ num17 = Label(root, text="Материал газопровода", background="
 num17.place(x=X1,y=mass[16])
 
 combo_exsample_gas_material = ttk.Combobox(root, 
-                           values=["Сталь", "Полиэтилен"],
+                           values=["Сталь", "Полиэтилен", "Чугун"],
                            postcommand=changeMaterials, width=17)
 combo_exsample_gas_material.place(x=X2, y=mass[16])
 
