@@ -82,6 +82,12 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  font='Tahoma 20', command= lambda: model.do_plot())
 btplot1.place(x=X1, y=mass[20], width=150, height=60)
 
-
+btplot1 = Button(root, text='Очистить',  # текст кнопки 
+                 background="#72D0F2",     # фоновый цвет кнопки
+                 foreground="black",     # цвет текста
+                 padx="20",                # отступ от границ до содержимого по горизонтали
+                 pady="8",                 # отступ от границ до содержимого по вертикали
+                 font='Tahoma 20', command= lambda: model.clear())
+btplot1.place(x=X1, y=mass[23], width=150, height=60)
 
 root.mainloop()
