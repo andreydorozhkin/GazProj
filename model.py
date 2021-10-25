@@ -1,3 +1,4 @@
+from collections import Counter
 import view
 import numpy as np
 import math
@@ -192,3 +193,24 @@ def diametr(A,p0,Q0,P_ud):
     y=m1
     dp=pow(x,(1/y))
     return dp
+
+def finding_K(d):
+    K_mass=[80,100,150,200,250,300]
+    array_difference=[]
+    K_ud=float()
+    for i in K_mass:
+        if i>=d:
+            array_difference=array_difference+[i-d]
+        if i<=d:
+            array_difference=array_difference+[d-i]
+    mylist = array_difference
+    doubles=[k for k,v in Counter(mylist).items() if v>1]
+    if len(doubles)==1:
+        smallest_number = min(array_difference)
+        ind=array_difference.index(smallest_number)
+        K_ud=K_mass[ind+1]
+        return K_ud
+    smallest_number = min(array_difference)
+    ind=array_difference.index(smallest_number)
+    K_ud=K_mass[ind]
+    return K_ud  
