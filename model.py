@@ -5,9 +5,14 @@ import math
 import sys
 import os
 
-def field_getter(field):
-    request=float(field.get())
-    return request
+def field_getter(field): #Я добавил автозаполнение чтобы не париться, но вообще нужны цельные данные
+    try:
+        request=float(field.get())
+        return request
+    except:
+        request=float(1)
+        return request
+    
 
 def clear():
     python = sys.executable
@@ -196,7 +201,7 @@ def critical():
     a = field_getter(view.cost_natur_liquided_gas)
     K_ksg = capital_costs_ksg(CityYear, a)
     K_cist = capital_costs_tank(field_getter(view.number_cistern), field_getter(view.cost_cistern))
-    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank),   #функция имеет 4 параметра
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank),   #функция имеет 4 параметра ты добавил 5 параметр, я его так же добавил в саму функцию, проверь
                               K_gazif)
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
