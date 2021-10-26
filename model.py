@@ -136,16 +136,9 @@ def diametr(Q0):
     A=0.101325/0.6*162*(pow(3.14,2))
     material_steel=[0.022, 2, 5] 
     material_polyethylene=[0.0446, 1.75, 4.75]  #A,m1,m2
-    if view.combo_exsample_gas_material.get()=="Сталь":
-        B=material_steel[0]
-        m=material_steel[1]
-        m1=material_steel[2]
-    if view.combo_exsample_gas_material.get()=="Полиэтилен":
-        B=material_polyethylene[0]
-        m=material_polyethylene[1]
-        m1=material_polyethylene[2]
-    else:
-        pass
+    B=material_steel[0]
+    m=material_steel[1]
+    m1=material_steel[2]
     dp=(A*B*p0*(pow(Q0,m)))/P_ud
     x=dp
     y=m1
@@ -204,9 +197,9 @@ def critical():
     N_shgrp = operating_cost_shgrp(K_shgrp)  
     K_ud = finding_K(diametr(CityYear))
     answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
-    print("t_cl:" + str(t_cl) + "t0:" + str(t0)+ "Q0: " + str(CityYear) + "K_chsw: " + str(K_chsw) +
-         "K_gazif: " + str(K_gazif)+ "a: " + str(a) + "K_ksg: " + str(K_ksg) +  "K_cist: " + str(K_cist) + "K_spg: " + str(K_spg) + 
-         "Y_cl: " + Y_tcl + "Y_t0: " + Y_t0 + "N_spg: " + N_spg + "K_shgrp: " + K_shgrp + "L_spg: " + L_spg + 
-         "C_pg: " + str(C_pg) + "kpd: " + str(kpd) + "N_shgrp: " + str(N_shgrp) + "K_ud: " + str(K_ud))
+    print("t_cl:" + str(t_cl), "t0:" + str(t0), "Q0: " + str(CityYear), "K_chsw: " + str(K_chsw),
+         "K_gazif: " + str(K_gazif), "a: " + str(a), "K_ksg: " + str(K_ksg),  "K_cist: " + str(K_cist), "K_spg: " + str(K_spg), 
+         "Y_cl: " + str(Y_tcl), "Y_t0: " + str(Y_t0), "N_spg: " + str(N_spg), "K_shgrp: " + str(K_shgrp), "L_spg: " + str(L_spg), 
+         "C_pg: " + str(C_pg), "kpd: " + str(kpd), "N_shgrp: " + str(N_shgrp), "K_ud: " + str(K_ud))
     view.message_ask(["Request!", "Ответ: " + answer]) 
 
