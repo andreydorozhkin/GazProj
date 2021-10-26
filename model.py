@@ -36,17 +36,6 @@ def do_plot():
             view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
         except:
             view.message_error(["Error", "Где-то ошибка"])
-    if view.combo_exsample_gas_material.get()=="Чугун":
-        x=t0
-        y=l1
-        try:
-            #[view.ax[x].clear() for x in range(1)]
-            view.ax[0].plot(x,y,color="green",label="Q=1000")
-            view.figure.legend(loc = "upper left")
-            view.canvas.draw()
-            view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
-        except:
-            view.message_error(["Error", "Где-то ошибка"])
     if view.combo_exsample_gas_material.get()=="Полиэтилен":
         x=t0
         y=l2
