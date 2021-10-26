@@ -7,12 +7,12 @@ import os
 import random
 
 def field_getter(field): #Я добавил автозаполнение чтобы не париться, но вообще нужны цельные данные
-    try:
-        request=float(field.get())
-        return request
-    except:
-        request=float(random.randint(110,1278904))
-        return request
+    #try:
+    request=float(field)#.get())
+    return request
+    #except:
+        #request=float(random.randint(110,1278904))
+        #return request
     
 
 def clear():
@@ -51,6 +51,7 @@ def do_plot():
 
 # Капитальные затраты на комплекс по сжижению газа
 def capital_costs_ksg(Q, cost_liquid_gaz):
+    print(cost_liquid_gaz)
     costs = 2 * Q * cost_liquid_gaz
     return costs
 
@@ -60,17 +61,19 @@ def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif, K_tank):
     return costs
 
 # Капитальные затраты на цистерны
-def capital_costs_tank(number, cost):
+def capital_costs_cist(number, cost):
     return number*cost
 
 # Эксплуатационные затраты на обслуживание ГРП
 def Q_year(need_city):
+    print("need_city = "+str(need_city))
     q = need_city/12185.4
     return q
 
 # Эксплуатационны затраты на ШГРП
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
+
 #Капитальные затраты на газораспределительные шкафы
 def capital_cost_GRPSH(Q):
     cap_GRPSH=(19.35906314*Q*1380)/1800  #Q_y-Это список
@@ -96,12 +99,23 @@ def capital_costs_storage(num_storage, cost_storage):
 
 # Эксплуатационные затраты на хранилища
 def operating_costs_storage(K_chsw):
-    return K_chsw*0.5/100
+    exp=(K_chsw*0.5)/100
+    return exp
+
+#Экспулатауционные затраты на цистерны
+def exp_cost_cist(number_cist):
+    exp=(number_cist/100)*5
+    return exp
 
 # Эксплутационные расходы по доставке СПГ
-def operating_costs_spg(N_cist, N_schw, N_gazif, N_ksg, Q_year, a):
+def operating_costs_spg(N_cist, N_schw, N_gazif, N_ksg, Q_year, a): #Здесь какая то залупа с N_ksg я его захардкодил
     numerator = Q_year * a/0.9
-    costs = numerator + N_cist + N_ksg  + N_schw + N_gazif
+    print(numerator)
+    print(N_cist)
+    print(N_schw)
+    print(N_gazif)
+    print(N_ksg)
+    costs = numerator + N_cist + 119938.20  + N_schw + N_gazif
     return costs
 
 # Коэффциент дисконтирования (вместо t_cl может прийти t0)
@@ -131,21 +145,20 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
 
 
 def diametr(Q0):
-    P_ud = 0.25/(1.1*field_getter(view.factory_distance)*1000)
+    P_ud = 0.25/(1.1*field_getter(10)*1000)    #  view.factory_distance
     p0 = 0.101325
     A=0.101325/0.6*162*(pow(3.14,2))
     material_steel=[0.022, 2, 5] 
     material_polyethylene=[0.0446, 1.75, 4.75]  #A,m1,m2
-    if view.combo_exsample_gas_material.get()=="Сталь":
-        B=material_steel[0]
-        m=material_steel[1]
-        m1=material_steel[2]
-    if view.combo_exsample_gas_material.get()=="Полиэтилен":
-        B=material_polyethylene[0]
-        m=material_polyethylene[1]
-        m1=material_polyethylene[2]
-    else:
-        pass
+    B=material_steel[0]
+    m=material_steel[1]
+    m1=material_steel[2]
+    #if view.combo_exsample_gas_material.get()=="Полиэтилен":
+        #B=material_polyethylene[0]
+        #m=material_polyethylene[1]
+        #m1=material_polyethylene[2]
+    #else:
+        #pass
     dp=(A*B*p0*(pow(Q0,m)))/P_ud
     x=dp
     y=m1
@@ -182,31 +195,32 @@ def finding_K(dp):
 #     answer = str((field_getter(view.cost_natur_liquided_gas)))
 #     view.message_info(["Request!", "Ответ: " + answer])
 
+
 def critical():
     t_cl=30
     t0=1
-    CityYear = Q_year(field_getter(view.city_need_energy))
-    K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank))
-    K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers))
-    a = field_getter(view.cost_natur_liquided_gas)
+    CityYear = Q_year(field_getter(100000)) #view.city_need_energy    
+    K_chsw = capital_costs_storage(field_getter(1), field_getter(4049850)) #view.number_tank   view.cost_tank  
+    K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(2554200)) #  view.cost_gasifiers
+    a = field_getter(18268.68711) # view.cost_natur_liquided_gas
     K_ksg = capital_costs_ksg(CityYear, a)
-    K_cist = capital_costs_tank(field_getter(view.number_cistern), field_getter(view.cost_cistern))
-    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank),   
+    K_cist = capital_costs_cist(field_getter(1), field_getter(27768000)) #  view.number_cistern   view.cost_cistern
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(4049850),   #  view.cost_tank
                               K_gazif)
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
-    N_spg = operating_costs_spg(1, operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
+    N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
                                 capital_costs_ksg(CityYear, a), CityYear, a)
     K_shgrp = capital_cost_GRPSH(CityYear)
     L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, 1, t_cl, 40000)
-    C_pg = field_getter(view.cost_gas)   
+    C_pg = field_getter(9.5)   #  view.cost_gas
     kpd = 0.9
     N_shgrp = operating_cost_shgrp(K_shgrp)  
     K_ud = finding_K(diametr(CityYear))
-    answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
-    print("t_cl:" + str(t_cl) + "t0:" + str(t0)+ "Q0: " + str(CityYear) + "K_chsw: " + str(K_chsw) +
-         "K_gazif: " + str(K_gazif)+ "a: " + str(a) + "K_ksg: " + str(K_ksg) +  "K_cist: " + str(K_cist) + "K_spg: " + str(K_spg) + 
-         "Y_cl: " + Y_tcl + "Y_t0: " + Y_t0 + "N_spg: " + N_spg + "K_shgrp: " + K_shgrp + "L_spg: " + L_spg + 
-         "C_pg: " + str(C_pg) + "kpd: " + str(kpd) + "N_shgrp: " + str(N_shgrp) + "K_ud: " + str(K_ud))
+    answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl)) #N_spg L_spg K_ud K_shgrp t0 t_cl K_cist K_chsw
+    # В Q0 какое то сранное значение, нов роде бы все сходится, K_gazif   a
+    print("K_ksg: " + str(K_ksg), "K_spg: " + str(K_spg), 
+          "Y_cl: " + str(Y_tcl), "Y_t0: " + str(Y_t0),
+          "C_pg: " + str(C_pg), "kpd: " + str(kpd), "N_shgrp: " + str(N_shgrp))
     view.message_ask(["Request!", "Ответ: " + answer]) 
 
