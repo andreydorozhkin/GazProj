@@ -185,12 +185,12 @@ def critical():
     t_cl=30
     t0=1
     CityYear = Q_year(field_getter(100000)) #view.city_need_energy    
-    K_chsw = capital_costs_storage(field_getter(1), field_getter(4049850)) #view.number_tank   view.cost_tank  
+    K_chsw = capital_costs_storage(field_getter(1), field_getter(4049849.86)) #view.number_tank   view.cost_tank  
     K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(2554200)) #  view.cost_gasifiers
     a = field_getter(18268.68711) # view.cost_natur_liquided_gas
     K_ksg = capital_costs_ksg(CityYear, a)
     K_cist = capital_costs_cist(field_getter(1), field_getter(27768000)) #  view.number_cistern   view.cost_cistern
-    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(4049850),   #  view.cost_tank
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(49849.86),   #  view.cost_tank
                               K_gazif)
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
