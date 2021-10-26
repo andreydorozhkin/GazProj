@@ -6,7 +6,7 @@ import sys
 import os
 import random
 
-def field_getter(field): #Я добавил автозаполнение чтобы не париться, но вообще нужны цельные данные
+def field_getter(field):
     request=float(field)
     return request
     
@@ -154,7 +154,7 @@ def diametr(Q0):
 
 #Нахождение К-удельное
 def finding_K(dp):
-    K_mass=[80,100,150,200,250,300] #Список удельных К
+    K_mass=[80,100,150,200,250,300] 
     mass=[4864558, 5756494, 6110114, 7401794, 8427619, 10360698  ]
     array_difference=[]
     K_ud=float()
@@ -176,11 +176,6 @@ def finding_K(dp):
     K_ud=K_mass[ind]
     money=mass[ind]
     return money   
-
-# def critical():
-#     answer = str((field_getter(view.cost_natur_liquided_gas)))
-#     view.message_info(["Request!", "Ответ: " + answer])
-
 
 def critical():
     t_cl=30
@@ -204,7 +199,5 @@ def critical():
     N_shgrp = operating_cost_shgrp(K_shgrp)  
     K_ud = finding_K(diametr(CityYear))
     answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
-    print("K_spg: " + str(K_spg))
-    print("N_spg: " + str(N_spg))
     view.message_info(["Request!", "Ответ: " + answer]) 
 
