@@ -55,7 +55,7 @@ def capital_costs_ksg(Q, cost_liquid_gaz):
     return costs
 
 # капитальные вложения в систему газоснабжения объекта СПГ
-def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif, K_tank): # Я Добавил параметр стоимость хранилища
+def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif, K_tank): 
     costs = K_ksg+K_cist+K_khsv+K_gazif+K_tank
     return costs
 
@@ -191,7 +191,7 @@ def critical():
     a = field_getter(view.cost_natur_liquided_gas)
     K_ksg = capital_costs_ksg(CityYear, a)
     K_cist = capital_costs_tank(field_getter(view.number_cistern), field_getter(view.cost_cistern))
-    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank),   #функция имеет 4 параметра ты добавил 5 параметр, я его так же добавил в саму функцию, проверь
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank),   
                               K_gazif)
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
@@ -204,5 +204,9 @@ def critical():
     N_shgrp = operating_cost_shgrp(K_shgrp)  
     K_ud = finding_K(diametr(CityYear))
     answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
+    print("t_cl:" + str(t_cl) + "t0:" + str(t0)+ "Q0: " + str(CityYear) + "K_chsw: " + str(K_chsw) +
+         "K_gazif: " + str(K_gazif)+ "a: " + str(a) + "K_ksg: " + str(K_ksg) +  "K_cist: " + str(K_cist) + "K_spg: " + str(K_spg) + 
+         "Y_cl: " + Y_tcl + "Y_t0: " + Y_t0 + "N_spg: " + N_spg + "K_shgrp: " + K_shgrp + "L_spg: " + L_spg + 
+         "C_pg: " + str(C_pg) + "kpd: " + str(kpd) + "N_shgrp: " + str(N_shgrp) + "K_ud: " + str(K_ud))
     view.message_ask(["Request!", "Ответ: " + answer]) 
 
