@@ -221,5 +221,5 @@ def critical():
     print("kpd: " + str(kpd))
     print("N_shgrp: " + str(N_shgrp))
     print("K_ud: " + str(K_ud))
-    view.message_ask(["Request!", "Ответ: " + answer]) 
+    view.message_info(["Request!", "Ответ: " + answer]) 
 
