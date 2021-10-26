@@ -4,13 +4,14 @@ import numpy as np
 import math
 import sys
 import os
+import random
 
 def field_getter(field): #Я добавил автозаполнение чтобы не париться, но вообще нужны цельные данные
     try:
         request=float(field.get())
         return request
     except:
-        request=float(1)
+        request=float(random.randint(110,1278904))
         return request
     
 
