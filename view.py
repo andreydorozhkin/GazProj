@@ -80,7 +80,7 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  foreground="black",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
-                 font='Tahoma 20', command= lambda: model.do_plot())
+                 font='Tahoma 20', command= lambda: model.critical())
 btplot1.place(x=X1, y=mass[19], width=150, height=60)
 
 btplot2 = Button(root, text='Очистить',  # текст кнопки 
@@ -90,14 +90,5 @@ btplot2 = Button(root, text='Очистить',  # текст кнопки
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 20', command= lambda: model.clear())
 btplot2.place(x=X1, y=mass[22], width=150, height=60)
-
-btplot3 = Button(root, text='Critical',  # текст кнопки 
-                 background="#72D0F2",     # фоновый цвет кнопки
-                 foreground="black",     # цвет текста
-                 padx="20",                # отступ от границ до содержимого по горизонтали
-                 pady="8",                 # отступ от границ до содержимого по вертикали
-                 font='Tahoma 20', command = model.critical)
-btplot3.place(x=X1, y=mass[25], width=150, height=60)
-
 
 root.mainloop()
