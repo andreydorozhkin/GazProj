@@ -175,24 +175,25 @@ def finding_K(dp):
 #     answer = str((field_getter(view.cost_natur_liquided_gas)))
 #     view.message_info(["Request!", "Ответ: " + answer])
 
+
 def critical():
     t_cl=30
     t0=1
-    CityYear = Q_year(field_getter(view.city_need_energy))
-    K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank))
-    K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers))
-    a = field_getter(view.cost_natur_liquided_gas)
+    CityYear = Q_year(field_getter(100000)) #view.city_need_energy    
+    K_chsw = capital_costs_storage(field_getter(1), field_getter(4049850)) #view.number_tank   view.cost_tank  
+    K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(2554200)) #  view.cost_gasifiers
+    a = field_getter(18268.68711) # view.cost_natur_liquided_gas
     K_ksg = capital_costs_ksg(CityYear, a)
-    K_cist = capital_costs_tank(field_getter(view.number_cistern), field_getter(view.cost_cistern))
-    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(view.cost_tank),   
+    K_cist = capital_costs_cist(field_getter(1), field_getter(27768000)) #  view.number_cistern   view.cost_cistern
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(4049850),   #  view.cost_tank
                               K_gazif)
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
-    N_spg = operating_costs_spg(1, operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
+    N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
                                 capital_costs_ksg(CityYear, a), CityYear, a)
     K_shgrp = capital_cost_GRPSH(CityYear)
     L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, 1, t_cl, 40000)
-    C_pg = field_getter(view.cost_gas)   
+    C_pg = field_getter(9.5)   #  view.cost_gas
     kpd = 0.9
     N_shgrp = operating_cost_shgrp(K_shgrp)  
     K_ud = finding_K(diametr(CityYear))
