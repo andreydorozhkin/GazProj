@@ -119,15 +119,20 @@ def liquidation_value(K_ksg, K_cist, K_khsv, K_gazif, t0, t_cl, K_hswd):
 
 # Расчет критического радиуса
 def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
-    one_mltpr = Y_tcl * N_spg
-    two_mltpr = Y_t0*(N_spg+K_shgrp-L_spg)
-    three_mltpr_1 = Y_tcl-Y_t0
-    three_mltpr_2 = (C_pg*Q_year)/kpd+N_shgrp
-    three_mltpr = three_mltpr_1*three_mltpr_2
-    numerator = K_spg+one_mltpr-two_mltpr-three_mltpr
-    denominator_2 = Y_t0+(Y_tcl-Y_t0)/(4*t_cl)
-    denominator = K_ud*denominator_2
-    distance = numerator/denominator
+    one_step=Y_tcl*N_spg
+    two_step=Y_t0*(N_spg+K_shgrp-L_spg)
+    three_step1=Y_tcl-Y_t0
+    three_step2=((C_pg*Q_year)/kpd)+N_shgrp
+    three_step=three_step1*three_step2
+    numerator=one_step-two_step-three_step
+    four_step=(Y_tcl-Y_t0)
+    ext_step=(4*t_cl)
+    ext2_step=four_step/ext_step
+    five_step=ext2_step+Y_t0
+    denominator=K_ud*five_step
+    print(numerator)
+    print(denominator)
+    distance=numerator/denominator
     return distance
 
 
@@ -150,7 +155,7 @@ def diametr(Q0):
 #Нахождение К-удельное
 def finding_K(dp):
     K_mass=[80,100,150,200,250,300] #Список удельных К
-    mass=[4864.558, 5756.494, 6110.114, 7401.794, 8427.619, 10360.698  ]
+    mass=[4864558, 5756494, 6110114, 7401794, 8427619, 10360698  ]
     array_difference=[]
     K_ud=float()
     for i in K_mass:
