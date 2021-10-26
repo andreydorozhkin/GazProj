@@ -60,7 +60,7 @@ def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif, K_tank):
     return costs
 
 # Капитальные затраты на цистерны
-def capital_costs_tank(number, cost):
+def capital_costs_cist(number, cost):
     return number*cost
 
 # Эксплуатационные затраты на обслуживание ГРП
@@ -97,6 +97,11 @@ def capital_costs_storage(num_storage, cost_storage):
 # Эксплуатационные затраты на хранилища
 def operating_costs_storage(K_chsw):
     return K_chsw*0.5/100
+
+#Экспулатауционные затраты на цистерны  #Новый пункт
+def exp_cost_cist(number_cist):
+    exp=(number_cist/100)*5
+    return exp
 
 # Эксплутационные расходы по доставке СПГ
 def operating_costs_spg(N_cist, N_schw, N_gazif, N_ksg, Q_year, a):
@@ -198,9 +203,23 @@ def critical():
     N_shgrp = operating_cost_shgrp(K_shgrp)  
     K_ud = finding_K(diametr(CityYear))
     answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
-    print("t_cl:" + str(t_cl), "t0:" + str(t0), "Q0: " + str(CityYear), "K_chsw: " + str(K_chsw),
-         "K_gazif: " + str(K_gazif), "a: " + str(a), "K_ksg: " + str(K_ksg),  "K_cist: " + str(K_cist), "K_spg: " + str(K_spg), 
-         "Y_cl: " + str(Y_tcl), "Y_t0: " + str(Y_t0), "N_spg: " + str(N_spg), "K_shgrp: " + str(K_shgrp), "L_spg: " + str(L_spg), 
-         "C_pg: " + str(C_pg), "kpd: " + str(kpd), "N_shgrp: " + str(N_shgrp), "K_ud: " + str(K_ud))
+    print("t_cl:" + str(t_cl))
+    print("t0:" + str(t0))
+    print("Q0: " + str(CityYear))
+    print("K_chsw: " + str(K_chsw))
+    print("K_gazif: " + str(K_gazif))
+    print("a: " + str(a))
+    print("K_ksg: " + str(K_ksg))
+    print("K_cist: " + str(K_cist))
+    print("K_spg: " + str(K_spg))
+    print("Y_cl: " + str(Y_tcl))
+    print("Y_t0: " + str(Y_t0))
+    print("N_spg: " + str(N_spg))
+    print("K_shgrp: " + str(K_shgrp))
+    print("L_spg: " + str(L_spg))
+    print("C_pg: " + str(C_pg))
+    print("kpd: " + str(kpd))
+    print("N_shgrp: " + str(N_shgrp))
+    print("K_ud: " + str(K_ud))
     view.message_ask(["Request!", "Ответ: " + answer]) 
 
