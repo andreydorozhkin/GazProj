@@ -49,6 +49,16 @@ def do_plot():
 def capital_costs_ksg(Q, cost_liquid_gaz):
     costs = 2 * Q * cost_liquid_gaz
     return costs
+# Эксплуатационные затраты на комплекс по сжижению газа
+def operation_costs_ksg(K_ksg):
+    N1 = 0.1*K_ksg
+    N2 = 0.05 * K_ksg  
+    N3 = 0.04 * K_ksg
+    N4 = 0.1 * K_ksg
+    N5 = 0.11*K_ksg
+    N_ksg = N1 + N2 + N3 + N4 + N5
+    return N_ksg
+
 
 # капитальные вложения в систему газоснабжения объекта СПГ
 def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif): 
@@ -114,6 +124,7 @@ def discount_rate(t_cl, E):
 
 # Остаточная ликвидационная стоиомость
 def liquidation_value(K_ksg, K_cist, K_khsv, K_gazif, t0, t_cl, K_hswd):
+
     one_mltpr = (t_cl-t0)/t_cl*(K_ksg+K_cist+K_gazif+K_khsv-K_hswd)
     return one_mltpr
 
@@ -122,7 +133,7 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
     one_step=Y_tcl*N_spg
     two_step=Y_t0*(N_spg+K_shgrp-L_spg)
     three_step1=Y_tcl-Y_t0
-    three_step2=((C_pg*Q_year)/kpd)+N_shgrp
+    three_step2=((C_pg*Q_year*1380)/kpd)+N_shgrp
     three_step=three_step1*three_step2
     numerator=one_step-two_step-three_step
     four_step=(Y_tcl-Y_t0)
@@ -178,7 +189,7 @@ def finding_K(dp):
 
 def critical():
     t_cl=30
-    t0=1
+    t0=29
     CityYear = Q_year(field_getter(100000)) #view.city_need_energy    
     K_chsw = capital_costs_storage(field_getter(1), field_getter(4049849.86)) #view.number_tank   view.cost_tank  
     K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(2554200)) #  view.cost_gasifiers
@@ -189,9 +200,9 @@ def critical():
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
     N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
-                                capital_costs_ksg(CityYear, a), CityYear, a)
+                                operation_costs_ksg(K_ksg), CityYear, a)
     K_shgrp = capital_cost_GRPSH(CityYear)
-    L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, 1, t_cl, 40000)
+    L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, t0, t_cl, 40000)
     C_pg = field_getter(9.5)   #  view.cost_gas
     kpd = 0.9
     N_shgrp = operating_cost_shgrp(K_shgrp)  
