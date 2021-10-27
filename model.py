@@ -1,18 +1,11 @@
 from collections import Counter
+from tkinter.constants import N
 import view
 import numpy as np
 import math
 import sys
 import os
 import random
-
-for_plot=[]
-
-def plotting():
-    for i in range(3):
-        print(i)
-        print(len(for_plot))
-        do_plot(for_plot[i])
 
 
 def field_getter(field):
@@ -24,7 +17,7 @@ def clear():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
-def do_plot(points):
+def do_plot(need_city, points):
     t0=[]
     t=1
     l0=points
@@ -33,17 +26,18 @@ def do_plot(points):
         t=t+1
     x=t0
     y=l0
-    print(x)
-    print(y)
+    #print(x)
+    #print(y)
     try:
         # [view.ax[x].clear() for x in range(1)]
         # view.figure.legend().remove()
-        view.ax[0].plot(x,y)
+        view.ax[0].plot(x,y,label="Q="+str(need_city/1000))
         view.figure.legend(loc = "upper left")
         view.canvas.draw()
-        view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
+        # view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
     except:
-        view.message_error(["Error", "Где-то ошибка"])
+        pass
+        # view.message_error(["Error", "Где-то ошибка"])
 
 
 # Капитальные затраты на комплекс по сжижению газа
@@ -191,9 +185,8 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-   
     need_city=100000
-    for i in range(3):
+    for i in range(4):
         need_city=need_city * (10**i)
         print("Need city: " + str(need_city))
         t0=1
@@ -239,6 +232,7 @@ def critical():
             answer.append(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
             #view.message_info(["Request!", "Ответ: " + answer])
             t0+=1 
-        for_plot.append(answer)
-    plotting()
+        do_plot(need_city, answer)
+        need_city=need_city / (10**i)
+    
 
