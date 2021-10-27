@@ -51,8 +51,8 @@ def capital_costs_ksg(Q, cost_liquid_gaz):
     return costs
 
 # капитальные вложения в систему газоснабжения объекта СПГ
-def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif, K_tank): 
-    costs = K_ksg+K_cist+K_khsv+K_gazif+K_tank
+def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif): 
+    costs = K_ksg+K_cist+K_khsv+K_gazif
     return costs
 
 # Капитальные затраты на цистерны
@@ -135,6 +135,18 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
     distance=numerator/denominator
     return distance
 
+def new_critical_distance(K_spg, Y_tcl,  N_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
+    one = Y_tcl*N_spg
+    two = Y_tcl*N_shgrp
+    three=Y_tcl*(C_pg*Q_year)/kpd
+    numerator = K_spg+one+two+three
+    denominator = K_ud*(1+Y_tcl/(4*t_cl))
+    distance = numerator / denominator
+    view.message_info(["Request!", "Новый расчет: " + str(distance)])
+    return distance
+
+
+
 
 def diametr(Q0):
     P_ud = 0.25/(1.1*field_getter(10)*1000) #view.factory_distance
@@ -186,8 +198,7 @@ def critical():
     a = field_getter(18268.68711) # view.cost_natur_liquided_gas
     K_ksg = capital_costs_ksg(CityYear, a)
     K_cist = capital_costs_cist(field_getter(1), field_getter(27768000)) #  view.number_cistern   view.cost_cistern
-    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, field_getter(409849.86),   #  view.cost_tank
-                              K_gazif)
+    K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)  #  view.cost_tank
     Y_tcl = discount_rate(t_cl, 0.1)
     Y_t0 = discount_rate(t0, 0.1)
     N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
@@ -198,6 +209,24 @@ def critical():
     kpd = 0.9
     N_shgrp = operating_cost_shgrp(K_shgrp)  
     K_ud = finding_K(diametr(CityYear))
+    print("Tcl:" + str(t_cl))
+    print("t0:" + str(t0))
+    print("Q0: " + str(CityYear))
+    print("Kхсв: " + str(K_chsw))
+    print("Kгазиф: " + str(K_gazif))
+    print("a: " + str(a))
+    print("Kксг: " + str(K_ksg))
+    print("Kцист: " + str(K_cist))
+    print("Kспг: " + str(K_spg))
+    print("Y_cl: " + str(Y_tcl))
+    print("Y_t0: " + str(Y_t0))
+    print("Испг: " + str(N_spg))
+    print("Кшгрп: " + str(K_shgrp))
+    print("Лспг: " + str(L_spg))
+    print("Cпг: " + str(C_pg))
+    print("КПД: " + str(kpd))
+    print("Ишгрп: " + str(N_shgrp))
+    print("Куд: " + str(K_ud))
     answer = str(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
     view.message_info(["Request!", "Ответ: " + answer]) 
 
