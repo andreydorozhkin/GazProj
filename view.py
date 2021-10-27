@@ -96,7 +96,7 @@ btplot3 = Button(root, text='Critical',  # текст кнопки
                  foreground="black",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
-                 font='Tahoma 20', command = model.critical)
+                 font='Tahoma 20', command = model.new_critical())
 btplot3.place(x=X1, y=mass[25], width=150, height=60)
 
 
