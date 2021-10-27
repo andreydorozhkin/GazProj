@@ -135,19 +135,6 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
     distance=numerator/denominator
     return distance
 
-def new_critical_distance(K_spg, Y_tcl,  N_spg, C_pg, Q_year, kpd, N_shgrp, K_ud, t_cl):
-    one = Y_tcl*N_spg
-    two = Y_tcl*N_shgrp
-    three=Y_tcl*(C_pg*Q_year)/kpd
-    numerator = K_spg+one+two+three
-    denominator = K_ud*(1+Y_tcl/(4*t_cl))
-    distance = numerator / denominator
-    view.message_info(["Request!", "Новый расчет: " + str(distance)])
-    return distance
-
-
-
-
 def diametr(Q0):
     P_ud = 0.25/(1.1*field_getter(10)*1000) #view.factory_distance
     p0 = 0.101325
