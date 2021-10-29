@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 root = tk.Tk()
-root.geometry('1300x700')
+root.geometry('1300x650')
 root.resizable(width=False, height=False) 
 root["bg"]="white"
-frame1 = Frame(root); frame1.place(x=0, y=20, width=700, height=700) #325 height
+frame1 = Frame(root); frame1.place(x=0, y=0, width=700, height=700) #325 height
 figure = plt.Figure(figsize=(1,1), facecolor='white', edgecolor="white")
 canvas = FigureCanvasTkAgg(figure, frame1)
-canvas.get_tk_widget().place(x=0,y=-60,width=700,height=750)
+canvas.get_tk_widget().place(x=0,y=0,width=700,height=650)
 ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 ax[0].set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
                 fontsize=12, color="black")
