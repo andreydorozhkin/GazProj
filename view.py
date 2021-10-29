@@ -15,9 +15,9 @@ canvas = FigureCanvasTkAgg(figure, frame1)
 canvas.get_tk_widget().place(x=0,y=0,width=700,height=650)
 ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 ax[0].set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
-                fontsize=12, color="#black")
+                fontsize=12, color="black")
 ax[0].set_ylabel("Удаленность потребителя от опорного пунка \nэнергоснабжения L, км",
-                fontsize=12, color="#black")
+                fontsize=12, color="black")
 
 #Визуальный метод определния материала
 def changeMaterials():
