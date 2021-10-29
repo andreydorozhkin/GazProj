@@ -14,7 +14,6 @@ figure = plt.Figure(figsize=(1,1), facecolor='white', edgecolor="white")
 canvas = FigureCanvasTkAgg(figure, frame1)
 canvas.get_tk_widget().place(x=0,y=0,width=700,height=650)
 ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
-ax[0].set_title("Тут должен быть какой то текст", fontsize=14)
 ax[0].set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
                 fontsize=12, color="#FF2300")
 ax[0].set_ylabel("Удаленность потребителя от опорного пунка \nэнергоснабжения L, км",
@@ -87,16 +86,16 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  foreground="black",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
-                 font='Tahoma 20', command= lambda: model.critical())
-btplot1.place(x=X1, y=mass[12], width=150, height=60)
+                 font='Tahoma 14', command= lambda: model.critical())
+btplot1.place(x=X1, y=mass[12], width=150/1.5, height=60/1.5)
 
 btplot2 = Button(root, text='Очистить',  # текст кнопки 
                  background="#60B9CE",     # фоновый цвет кнопки
                  foreground="black",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
-                 font='Tahoma 20', command= lambda: model.clear())
-btplot2.place(x=X1, y=mass[15], width=150, height=60)
+                 font='Tahoma 14', command= lambda: model.clear())
+btplot2.place(x=X1, y=mass[15], width=150/1.5, height=60/1.5)
 
 
 root.mainloop()
