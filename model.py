@@ -29,7 +29,7 @@ def do_plot(need_city, points):
     #print(x)
     #print(y)
     #[view.ax[x].clear() for x in range(1)]
-    view.ax[0].fill_between(x,y,label="Q="+str(need_city/1000))
+    view.ax[0].fill_between(x,y,label="Q="+str(need_city/1000)+"МВт*ч/год")
     view.figure.legend(loc = "upper left")
     view.canvas.draw()
         # view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
@@ -185,7 +185,7 @@ def critical():
     t_cl=30
     need_city=10000000
     for i in range(num_graph()):
-        need_city=need_city * (10**(-i))-1000
+        need_city=need_city-1000000# * (10**(-i))
         print("Need city: " + str(need_city))
         t0=1
         answer=[]
@@ -231,6 +231,6 @@ def critical():
             #view.message_info(["Request!", "Ответ: " + answer])
             t0+=1 
         do_plot(need_city, answer)
-        need_city=need_city / (10**-i)
+        need_city=need_city # (10**i)
     
 
