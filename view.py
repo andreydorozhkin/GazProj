@@ -7,16 +7,18 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 root = tk.Tk()
-root.geometry('1300x800')
+root.geometry('1300x700')
 root["bg"]="white"
-frame1 = Frame(root); frame1.place(x=-15, y=-15, width=700, height=650) #325 height
-figure = plt.Figure(figsize=(20,10), facecolor='white', edgecolor="white")
+frame1 = Frame(root); frame1.place(x=0, y=0, width=700, height=700) #325 height
+figure = plt.Figure(figsize=(1,1), facecolor='white', edgecolor="white")
 canvas = FigureCanvasTkAgg(figure, frame1)
-canvas.get_tk_widget().place(x=10,y=10,width=700,height=650)
+canvas.get_tk_widget().place(x=0,y=0,width=700,height=650)
 ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
 ax[0].set_title("Тут должен быть какой то текст", fontsize=14)
-ax[0].set_xlabel("t - время перехода с СПГ на ПГ", fontsize=14, color="#FF2300")
-ax[0].set_ylabel("L - Критическое расстояние", fontsize=14, color="#FF2300")
+ax[0].set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
+                fontsize=12, color="#FF2300")
+ax[0].set_ylabel("Удаленность потребителя от опорного пунка \nэнергоснабжения L, км",
+                fontsize=12, color="#FF2300")
 
 #Визуальный метод определния материала
 def changeMaterials():
@@ -45,9 +47,9 @@ def generate_field(name_field, x_label, y_label, x_entry, y_entry):
     text.place(x=x_entry, y=y_entry)
     return text
 
-mass=generate_coordinat(30, 5, 0)
-X1=710
-X2=1150
+mass=generate_coordinat(30, 70, 0)
+X1=675
+X2=1050
 
 
 cost_gas = generate_field("Стоимость газа", X1, mass[0], X2, mass[0])
