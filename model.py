@@ -180,19 +180,19 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    need_city=10000000
+    need_city=field_getter(view.city_need_energy)
     for i in range(3):
         need_city=(need_city * (10**-i))
         print("Need city: " + str(need_city))
         t0=1
         answer=[]
         while t0!=30:
-            K_chsw = capital_costs_storage(field_getter(1), field_getter(4049849.86)) #view.number_tank   view.cost_tank  
+            K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
             CityYear = Q_year(field_getter(need_city)) #view.city_need_energy    
-            K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(2554200)) #  view.cost_gasifiers
-            a = field_getter(18268.68711) # view.cost_natur_liquided_gas
+            K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
+            a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
-            K_cist = capital_costs_cist(field_getter(1), field_getter(27768000)) #  view.number_cistern   view.cost_cistern
+            K_cist = capital_costs_cist(field_getter(view.number_cistern), field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
             K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)  #  view.cost_tank
             Y_tcl = discount_rate(t_cl, 0.1)
             Y_t0 = discount_rate(t0, 0.1)
@@ -200,7 +200,7 @@ def critical():
                                 operation_costs_ksg(K_ksg), CityYear, a)
             K_shgrp = capital_cost_GRPSH(CityYear)
             L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, t0, t_cl, 40000)
-            C_pg = field_getter(9.5)   #  view.cost_gas
+            C_pg = field_getter(view.cost_gas)   #  view.cost_gas
             kpd = 0.9
             N_shgrp = operating_cost_shgrp(K_shgrp)  
             K_ud = finding_K(diametr(CityYear))
