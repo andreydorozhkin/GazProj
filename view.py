@@ -8,6 +8,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 root = tk.Tk()
 root.geometry('1300x700')
+root.resizable(width=False, height=False) 
 root["bg"]="white"
 frame1 = Frame(root); frame1.place(x=0, y=20, width=700, height=700) #325 height
 figure = plt.Figure(figsize=(1,1), facecolor='white', edgecolor="white")
