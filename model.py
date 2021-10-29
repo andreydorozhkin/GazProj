@@ -1,10 +1,12 @@
 from collections import Counter
+from tkinter.constants import N
 import view
 import numpy as np
 import math
 import sys
 import os
-import random
+
+
 
 def field_getter(field):
     request=float(field)
@@ -15,26 +17,22 @@ def clear():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
-def do_plot(points):
+def do_plot(need_city, points):
     t0=[]
     t=1
     l0=points
     while t!=30:
-        t0=t0+[t]
+        t0.append(t)
         t=t+1
     x=t0
     y=l0
-    print(x)
-    print(y)
-    try:
-        [view.ax[x].clear() for x in range(1)]
-        view.figure.legend().remove()
-        view.ax[0].plot(x,y, color="red",label="Q=100" )
-        view.figure.legend(loc = "upper left")
-        view.canvas.draw()
-        view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
-    except:
-        view.message_error(["Error", "Где-то ошибка"])
+    #print(x)
+    #print(y)
+    #[view.ax[x].clear() for x in range(1)]
+    view.ax[0].fill_between(x,y,label="Q="+str(need_city/1000)+"МВт*ч/год")
+    view.figure.legend(loc = "upper left")
+    view.canvas.draw()
+        # view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
 
 
 # Капитальные затраты на комплекс по сжижению газа
@@ -182,45 +180,54 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    answer=[]
-    while t0!=30:
-        CityYear = Q_year(field_getter(100000)) #view.city_need_energy    
-        K_chsw = capital_costs_storage(field_getter(1), field_getter(4049849.86)) #view.number_tank   view.cost_tank  
-        K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(2554200)) #  view.cost_gasifiers
-        a = field_getter(18268.68711) # view.cost_natur_liquided_gas
-        K_ksg = capital_costs_ksg(CityYear, a)
-        K_cist = capital_costs_cist(field_getter(1), field_getter(27768000)) #  view.number_cistern   view.cost_cistern
-        K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)  #  view.cost_tank
-        Y_tcl = discount_rate(t_cl, 0.1)
-        Y_t0 = discount_rate(t0, 0.1)
-        N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
+    need_city=field_getter(view.city_need_energy)
+    for i in range(3):
+        need_city=(need_city * (10**-i))
+        print("Need city: " + str(need_city))
+        t0=1
+        answer=[]
+        while t0!=30:
+            K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
+            CityYear = Q_year(field_getter(need_city)) #view.city_need_energy    
+            K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
+            a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
+            K_ksg = capital_costs_ksg(CityYear, a)
+            K_cist = capital_costs_cist(field_getter(view.number_cistern), field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
+            K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)  #  view.cost_tank
+            Y_tcl = discount_rate(t_cl, 0.1)
+            Y_t0 = discount_rate(t0, 0.1)
+            N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
                                 operation_costs_ksg(K_ksg), CityYear, a)
-        K_shgrp = capital_cost_GRPSH(CityYear)
-        L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, t0, t_cl, 40000)
-        C_pg = field_getter(9.5)   #  view.cost_gas
-        kpd = 0.9
-        N_shgrp = operating_cost_shgrp(K_shgrp)  
-        K_ud = finding_K(diametr(CityYear))
-        print("Tcl:" + str(t_cl))
-        print("t0:" + str(t0))
-        print("Q0: " + str(CityYear))
-        print("Kхсв: " + str(K_chsw))
-        print("Kгазиф: " + str(K_gazif))
-        print("a: " + str(a))
-        print("Kксг: " + str(K_ksg))
-        print("Kцист: " + str(K_cist))
-        print("Kспг: " + str(K_spg))
-        print("Y_cl: " + str(Y_tcl))
-        print("Y_t0: " + str(Y_t0))
-        print("Испг: " + str(N_spg))
-        print("Кшгрп: " + str(K_shgrp))
-        print("Лспг: " + str(L_spg))
-        print("Cпг: " + str(C_pg))
-        print("КПД: " + str(kpd))
-        print("Ишгрп: " + str(N_shgrp))
-        print("Куд: " + str(K_ud))
-        answer.append(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
-        #view.message_info(["Request!", "Ответ: " + answer])
-        t0+=1
-    do_plot(answer)
+            K_shgrp = capital_cost_GRPSH(CityYear)
+            L_spg = liquidation_value(K_ksg, K_cist, K_chsw, K_gazif, t0, t_cl, 40000)
+            C_pg = field_getter(view.cost_gas)   #  view.cost_gas
+            kpd = 0.9
+            N_shgrp = operating_cost_shgrp(K_shgrp)  
+            K_ud = finding_K(diametr(CityYear))
+            # print("=================")
+            # print("Tcl:" + str(t_cl))
+            # print("t0:" + str(t0))
+            # print("Q0: " + str(CityYear))
+            # print("Kхсв: " + str(K_chsw))
+            # print("Kгазиф: " + str(K_gazif))
+            # print("a: " + str(a))
+            # print("Kксг: " + str(K_ksg))
+            # print("Kцист: " + str(K_cist))
+            # print("Kспг: " + str(K_spg))
+            # print("Y_cl: " + str(Y_tcl))
+            # print("Y_t0: " + str(Y_t0))
+            # print("Испг: " + str(N_spg))
+            # print("Кшгрп: " + str(K_shgrp))
+            # print("Лспг: " + str(L_spg))
+            # print("Cпг: " + str(C_pg))
+            # print("КПД: " + str(kpd))
+            # print("Ишгрп: " + str(N_shgrp))
+            # print("Куд: " + str(K_ud))
+            # print("=================")
+            answer.append(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
+            #view.message_info(["Request!", "Ответ: " + answer])
+            t0+=1 
+        do_plot(need_city, answer)
+        need_city=need_city / (10**-i)
+    
 
