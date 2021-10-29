@@ -1,5 +1,4 @@
 from collections import Counter
-from tkinter.constants import N
 import view
 import numpy as np
 import math
@@ -188,12 +187,12 @@ def critical():
         answer=[]
         while t0!=30:
             K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
-            CityYear = Q_year(field_getter(need_city)) #view.city_need_energy    
+            CityYear = Q_year(field_getter(need_city)) 
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
             K_cist = capital_costs_cist(field_getter(view.number_cistern), field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
-            K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)  #  view.cost_tank
+            K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)
             Y_tcl = discount_rate(t_cl, 0.1)
             Y_t0 = discount_rate(t0, 0.1)
             N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
