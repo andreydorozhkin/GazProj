@@ -28,16 +28,11 @@ def do_plot(need_city, points):
     y=l0
     #print(x)
     #print(y)
-    try:
-        # [view.ax[x].clear() for x in range(1)]
-        # view.figure.legend().remove()
-        view.ax[0].plot(x,y,label="Q="+str(need_city/1000))
-        view.figure.legend(loc = "upper left")
-        view.canvas.draw()
+    #[view.ax[x].clear() for x in range(1)]
+    view.ax[0].fill_between(x,y,label="Q="+str(need_city/1000))
+    view.figure.legend(loc = "upper left")
+    view.canvas.draw()
         # view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
-    except:
-        pass
-        # view.message_error(["Error", "Где-то ошибка"])
 
 
 # Капитальные затраты на комплекс по сжижению газа
@@ -185,9 +180,9 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    need_city=100000
-    for i in range(4):
-        need_city=need_city * (10**i)
+    need_city=10000000
+    for i in range(3):
+        need_city=need_city * (10**(-i))
         print("Need city: " + str(need_city))
         t0=1
         answer=[]
@@ -233,6 +228,6 @@ def critical():
             #view.message_info(["Request!", "Ответ: " + answer])
             t0+=1 
         do_plot(need_city, answer)
-        need_city=need_city / (10**i)
+        need_city=need_city / (10**-i)
     
 
