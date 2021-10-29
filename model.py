@@ -1,5 +1,5 @@
 from collections import Counter
-import view
+import view 
 import numpy as np
 import math
 import sys
@@ -8,7 +8,7 @@ import os
 
 
 def field_getter(field):
-    request=float(field)
+    request=float(field.get())
     return request
     
 
@@ -179,7 +179,7 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    need_city=field_getter(view.city_need_energy)
+    need_city=field_getter(1000000) # view.city_need_energy
     for i in range(3):
         need_city=(need_city * (10**-i))
         print("Need city: " + str(need_city))
@@ -187,7 +187,7 @@ def critical():
         answer=[]
         while t0!=30:
             K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
-            CityYear = Q_year(field_getter(need_city)) 
+            CityYear = Q_year(need_city)
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
