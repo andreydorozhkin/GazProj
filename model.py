@@ -5,7 +5,7 @@ import numpy as np
 import math
 import sys
 import os
-import random
+
 
 
 def field_getter(field):
@@ -176,13 +176,16 @@ def finding_K(dp):
     K_ud=K_mass[ind]
     money=mass[ind]
     return money   
+def num_graph():
+    counter_graph=int(view.scale.get())
+    return counter_graph
 
 def critical():
     t0=1
     t_cl=30
     need_city=10000000
-    for i in range(3):
-        need_city=need_city * (10**(-i))
+    for i in range(num_graph()):
+        need_city=need_city * (10**(-i))-1000
         print("Need city: " + str(need_city))
         t0=1
         answer=[]
