@@ -77,6 +77,14 @@ combo_exsample_gas_material = ttk.Combobox(root,
                            postcommand=changeMaterials, width=17)
 combo_exsample_gas_material.place(x=X2, y=mass[10])
 
+scale_txt = Label(root, text="Колличество выводимых графиков", background="white") 
+scale_txt.place(x=X1,y=mass[11])
+scale = Scale(root, orient="horizontal", resolution=1, from_=1, to=10)
+scale.place(x=X2,y=mass[11])
+
+
+
+
 
 
 btplot1 = Button(root, text='Рассчитать',  # текст кнопки 
@@ -85,7 +93,7 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 20', command= lambda: model.critical())
-btplot1.place(x=X1, y=mass[12], width=150, height=60)
+btplot1.place(x=X1, y=mass[13], width=150, height=60)
 
 btplot2 = Button(root, text='Очистить',  # текст кнопки 
                  background="#60B9CE",     # фоновый цвет кнопки
@@ -93,7 +101,7 @@ btplot2 = Button(root, text='Очистить',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 20', command= lambda: model.clear())
-btplot2.place(x=X1, y=mass[15], width=150, height=60)
+btplot2.place(x=X1, y=mass[16], width=150, height=60)
 
 
 root.mainloop()
