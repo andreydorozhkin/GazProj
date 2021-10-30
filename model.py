@@ -136,7 +136,7 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
     return distance
 
 def diametr(Q0):
-    P_ud = 0.25/(1.1*field_getter(10)*1000) #view.factory_distance
+    P_ud = 0.25/(1.1*field_getter(view.factory_distance)*1000) #view.factory_distance
     p0 = 0.101325
     A=0.101325/0.6*162*(pow(3.14,2))
     material_steel=[0.022, 2, 5] 
@@ -179,7 +179,7 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    need_city=field_getter(1000000) # view.city_need_energy
+    need_city=field_getter(10000000) # view.city_need_energy
     for i in range(3):
         need_city=(need_city * (10**-i))
         print("Need city: " + str(need_city))
