@@ -1,6 +1,5 @@
 from collections import Counter
-from tkinter.constants import N
-import view
+import view 
 import numpy as np
 import math
 import sys
@@ -9,7 +8,7 @@ import os
 
 
 def field_getter(field):
-    request=float(field)
+    request=float(field.get())
     return request
     
 
@@ -137,7 +136,7 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
     return distance
 
 def diametr(Q0):
-    P_ud = 0.25/(1.1*field_getter(10)*1000) #view.factory_distance
+    P_ud = 0.25/(1.1*field_getter(view.factory_distance)*1000) #view.factory_distance
     p0 = 0.101325
     A=0.101325/0.6*162*(pow(3.14,2))
     material_steel=[0.022, 2, 5] 
@@ -180,7 +179,7 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    need_city=field_getter(view.city_need_energy)
+    need_city=field_getter(10000000) # view.city_need_energy
     for i in range(3):
         need_city=(need_city * (10**-i))
         print("Need city: " + str(need_city))
@@ -188,12 +187,12 @@ def critical():
         answer=[]
         while t0!=30:
             K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
-            CityYear = Q_year(field_getter(need_city)) #view.city_need_energy    
+            CityYear = Q_year(need_city)
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
             K_cist = capital_costs_cist(field_getter(view.number_cistern), field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
-            K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)  #  view.cost_tank
+            K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)
             Y_tcl = discount_rate(t_cl, 0.1)
             Y_t0 = discount_rate(t0, 0.1)
             N_spg = operating_costs_spg(exp_cost_cist(K_cist), operating_costs_storage(K_chsw), operating_costs_gazif(K_gazif), 
