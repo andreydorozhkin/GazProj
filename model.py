@@ -179,7 +179,7 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    need_city=field_getter(10000000) # view.city_need_energy
+    need_city=(10000000) # view.city_need_energy
     for i in range(3):
         need_city=(need_city * (10**-i))
         print("Need city: " + str(need_city))
