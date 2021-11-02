@@ -12,7 +12,7 @@ root.resizable(width=False, height=False)
 root.title("Main Screen")
 root["bg"]="white"
 frame1 = Frame(root); frame1.place(x=0, y=0, width=700, height=700) #325 height
-figure = plt.Figure(figsize=(1,1), facecolor='white', edgecolor="white")
+figure = plt.Figure(figsize=(5,5), facecolor='white', edgecolor="white")
 canvas = FigureCanvasTkAgg(figure, frame1)
 canvas.get_tk_widget().place(x=0,y=0,width=700,height=650)
 ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
