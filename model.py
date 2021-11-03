@@ -9,7 +9,7 @@ import os
 def needing_city(): #тут тоже, но терпимо
     begin=field_getter(view.city_need_energy_begin)
     end=field_getter(view.city_need_energy_end)
-    mid = end / 2
+    mid = (begin + (end - begin))/ 2
     need_city_list=[end, mid, begin]
     print("Список потребностей города:")
     print(need_city_list)
@@ -20,11 +20,18 @@ def number_tank(need_city): #тут ошибка
     tcm=20
     insert_tank=field_getter(view.volume_tank)*8.83/1000
     nt=[]
+    print("Промежутки: ")
     while tcm <= 100:
-        nt.append(round((((need_city/1000)/12)*tcm)/40/insert_tank))
+        qeq = (((need_city/1000)/12)*tcm)/40/insert_tank
+        print(str(qeq))
+        nt.append(round(qeq))
         tcm+=20
     print("Список количества хранилищ: ")
     print(nt)
+    return 1
+
+def number_cistern():
+    return 1
     
 def field_getter(field):
     request=float(field.get())
@@ -206,12 +213,12 @@ def critical():
         t0=1
         answer=[]
         while t0!=30:
-            K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
+            K_chsw = capital_costs_storage(number_tank(need_city), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
             CityYear = Q_year(need_city)
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
-            K_cist = capital_costs_cist(field_getter(view.number_cistern), field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
+            K_cist = capital_costs_cist(number_cistern(), field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
             K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)
             Y_tcl = discount_rate(t_cl, 0.1)
             Y_t0 = discount_rate(t0, 0.1)
