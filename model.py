@@ -9,7 +9,7 @@ import os
 def needing_city(): #тут тоже, но терпимо
     begin=field_getter(view.city_need_energy_begin)
     end=field_getter(view.city_need_energy_end)
-    mid = (begin + (end - begin))/ 2
+    mid = end / 2
     need_city_list=[end, mid, begin]
     print("Список потребностей города:")
     print(need_city_list)
@@ -208,12 +208,7 @@ def critical():
     t_cl=30
     need_city=needing_city() # view.city_need_energy
     for i in need_city:
-        print("элемент в need_city "+str(i))
-        ind=need_city.index(i)
-        print("индекс "+str(ind))
         need_city=i
-        num_tank=number_tank(need_city)[ind]
-        print("Need city: " + str(need_city))
         t0=1
         answer=[]
         while t0!=30:
@@ -273,7 +268,7 @@ def clear_entry():
      view.combo_exsample_gas_material.delete(0,"end")
      view.city_need_energy_begin.delete(0, "end")
      view.city_need_energy_end.delete(0, "end")
-     view.number_cistern.delete(0,"end")
+     #view.number_cistern.delete(0,"end")
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
@@ -289,7 +284,7 @@ def test():
     view.combo_exsample_gas_material.insert(0,"Сталь")
     view.city_need_energy_begin.insert(0, "100000")
     view.city_need_energy_end.insert(0, "10000000")
-    view.number_cistern.insert(0,"1")
+    #view.number_cistern.insert(0,"1")
     # param=view.combo_exsample_gas_material.get()
     # print(param)
     critical()
