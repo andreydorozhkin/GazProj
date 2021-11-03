@@ -99,5 +99,13 @@ btplot2 = Button(root, text='Очистить',  # текст кнопки
                  font='Tahoma 14', command= lambda: model.clear())
 btplot2.place(x=X1, y=mass[13], width=150/1.5, height=60/1.5)
 
+btplot2 = Button(root, text='Тест',  # текст кнопки 
+                 background="#60B9CE",     # фоновый цвет кнопки
+                 foreground="black",     # цвет текста
+                 padx="20",                # отступ от границ до содержимого по горизонтали
+                 pady="8",                 # отступ от границ до содержимого по вертикали
+                 font='Tahoma 14', command= lambda: model.test())
+btplot2.place(x=X1, y=mass[16], width=150/1.5, height=60/1.5)
+
 
 root.mainloop()
