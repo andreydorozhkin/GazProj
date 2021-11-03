@@ -9,11 +9,23 @@ import os
 def needing_city():
     begin=field_getter(view.city_need_energy_begin)
     end=field_getter(view.city_need_energy_end)
-    mid = view.city_need_energy_end / 2
+    mid = end / 2
     need_city_list=[end, mid, begin]
+    print("Список потребностей города:")
+    print(need_city_list)
     return need_city_list
 
 
+def number_tank(need_city):
+    tcm=20
+    insert_tank=field_getter(view.volume_tank)*8.83/1000
+    nt=[]
+    while tcm <= 100:
+        nt.append(round((((need_city/1000)/12)*tcm)/40/insert_tank))
+        tcm+=20
+    print("Список количества хранилищ: ")
+    print(nt)
+    
 def field_getter(field):
     request=float(field.get())
     return request
@@ -189,6 +201,7 @@ def critical():
     need_city=needing_city() # view.city_need_energy
     for i in need_city:
         need_city=i
+        number_tank(need_city)
         print("Need city: " + str(need_city))
         t0=1
         answer=[]
@@ -247,6 +260,8 @@ def clear_entry():
      view.cost_gasifiers.delete(0, 'end')
      view.factory_distance.delete(0, 'end')
      view.combo_exsample_gas_material.delete(0,"end")
+     view.city_need_energy_begin.delete(0, "end")
+     view.city_need_energy_end.delete(0, "end")
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
@@ -256,10 +271,12 @@ def test():
     view.cost_cistern.insert(0,"27768000")
     view.volume_cistern.insert(0,"34700.1")
     view.cost_tank.insert(0,"4049849.86")
-    view.volume_tank.insert(0,"72643,2")
+    view.volume_tank.insert(0,"72643.2")
     view.cost_gasifiers.insert(0,"2554200")
     view.factory_distance.insert(0,"10")
     view.combo_exsample_gas_material.insert(0,"Сталь")
+    view.city_need_energy_begin.insert(0, "100000")
+    view.city_need_energy_end.insert(0, "10000000")
     # param=view.combo_exsample_gas_material.get()
     # print(param)
     critical()
