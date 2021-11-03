@@ -6,6 +6,13 @@ import sys
 import os
 
 
+def needing_city():
+    begin=field_getter(view.city_need_energy_begin)
+    end=field_getter(view.city_need_energy_end)
+    mid = view.city_need_energy_end / 2
+    need_city_list=[end, mid, begin]
+    return need_city_list
+
 
 def field_getter(field):
     request=float(field.get())
@@ -179,9 +186,9 @@ def finding_K(dp):
 def critical():
     t0=1
     t_cl=30
-    need_city=(10000000) # view.city_need_energy
-    for i in range(3):
-        need_city=(need_city * (10**-i))
+    need_city=needing_city() # view.city_need_energy
+    for i in need_city:
+        need_city=i
         print("Need city: " + str(need_city))
         t0=1
         answer=[]
