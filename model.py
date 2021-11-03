@@ -230,11 +230,20 @@ def critical():
         need_city=need_city / (10**-i)
 
 
-
-
+def clear_entry():
+     view.cost_gas.delete(0, 'end')
+     view.cost_natur_liquided_gas.delete(0, 'end')
+     view.cost_cistern.delete(0, 'end')
+     view.number_cistern.delete(0, 'end')
+     view.cost_tank.delete(0, 'end')
+     view.number_tank.delete(0, 'end')
+     view.cost_gasifiers.delete(0, 'end')
+     view.factory_distance.delete(0, 'end')
+     view.combo_exsample_gas_material.delete(0,"end")
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
+    clear_entry()
     view.cost_gas.insert(0,"9.5")
     view.cost_natur_liquided_gas.insert(0,"18268.68711")
     view.cost_cistern.insert(0,"27768000")
@@ -243,6 +252,14 @@ def test():
     view.number_tank.insert(0,"1")
     view.cost_gasifiers.insert(0,"2554200")
     view.factory_distance.insert(0,"10")
+    view.combo_exsample_gas_material.insert(0,"Сталь")
+    # param=view.combo_exsample_gas_material.get()
+    # print(param)
     critical()
+    # if param!="Сталь" or param!="Полиэтилен":
+    #    view.messagebox.showinfo("Внимание",
+    #                             "Выберете материал газопровода 'Сталь' или 'Полиэтилен'")
+    # else:
+    #    critical()
     
 
