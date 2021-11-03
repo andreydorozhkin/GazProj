@@ -49,7 +49,7 @@ def generate_field(name_field, x_label, y_label, x_entry, y_entry):
     return text
 
 mass=generate_coordinat(30, 70, 0)
-X1=675
+X1=775
 X2=1050
 
 
