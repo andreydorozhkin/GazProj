@@ -234,7 +234,7 @@ def critical():
             #view.message_info(["Request!", "Ответ: " + answer])
             t0+=1 
         do_plot(need_city, answer)
-        need_city=need_city / (10**-i)
+        
 
 
 def clear_entry():
