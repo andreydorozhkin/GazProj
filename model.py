@@ -6,7 +6,7 @@ import sys
 import os
 
 
-def needing_city():
+def needing_city(): #тут тоже, но терпимо
     begin=field_getter(view.city_need_energy_begin)
     end=field_getter(view.city_need_energy_end)
     mid = end / 2
@@ -16,7 +16,7 @@ def needing_city():
     return need_city_list
 
 
-def number_tank(need_city):
+def number_tank(need_city): #тут ошибка
     tcm=20
     insert_tank=field_getter(view.volume_tank)*8.83/1000
     nt=[]
