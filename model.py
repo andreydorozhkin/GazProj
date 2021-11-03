@@ -287,7 +287,7 @@ def test():
     #view.number_cistern.insert(0,"1")
     # param=view.combo_exsample_gas_material.get()
     # print(param)
-    critical()
+    #critical()
     # if param!="Сталь" or param!="Полиэтилен":
     #    view.messagebox.showinfo("Внимание",
     #                             "Выберете материал газопровода 'Сталь' или 'Полиэтилен'")
