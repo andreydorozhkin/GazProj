@@ -83,6 +83,9 @@ combo_exsample_gas_material = ttk.Combobox(root,
                            postcommand=changeMaterials, width=17)
 combo_exsample_gas_material.place(x=X2, y=mass[12])
 text_entry=Text(root, height=8, width=35)
+text_entry.insert(1.0,"Колличество хранилищ = ")
+text_entry.insert(2.0,"Колличество цистерн = ")
+text_entry.configure(state='disabled')
 text_entry.place(x=900, y=mass[16],)
 
 
