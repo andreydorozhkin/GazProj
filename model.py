@@ -29,8 +29,8 @@ def number_tank(need_city): #тут ошибка
     return 1
 
 def number_cistern():
-    view.number_cistern.config(state="normal")
-    view.number_cistern.insert(0,"1")
+    #view.number_cistern.config(state="normal")
+    #view.number_cistern.insert(0,"1")
     return 1
     
 def field_getter(field):
@@ -211,8 +211,11 @@ def critical():
         need_city=i
         t0=1
         answer=[]
+        count_tank=number_tank(need_city)
+        count_cistern = number_cistern()
+        view.text_entry.insert(1.0,str(number_tank))
+        view.text_entry.insert(2.0,str(count_cistern))
         while t0!=30:
-            count_tank=number_tank(need_city)
             #view.number_tank.config(state="normal")
             #view.number_tank.insert(0,str(number_tank))
             #view.number_tank.config(state="readonly")
@@ -221,7 +224,6 @@ def critical():
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
-            count_cistern = number_cistern()
             #view.number_cistern.config(state="normal")
             #view.number_cistern.insert(0, str(count_cistern))
             #view.number_cistern.config(state="readonly")
@@ -276,7 +278,7 @@ def clear_entry():
      view.combo_exsample_gas_material.delete(0,"end")
      view.city_need_energy_begin.delete(0, "end")
      view.city_need_energy_end.delete(0, "end")
-     view.number_cistern.delete(0,"end")
+     #view.number_cistern.delete(0,"end")
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
