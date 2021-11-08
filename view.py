@@ -61,12 +61,12 @@ city_need_energy_begin = generate_field("от", 1030, mass[2], X2, mass[2])
 city_need_energy_end = generate_field("до", 1030, mass[3], X2, mass[3])
 cost_cistern = generate_field("Стоимость автомобильной цистерны", X1, mass[4], X2, mass[4])
 volume_cistern = generate_field("Объем автомобильной цистерны", X1, mass[5], X2, mass[5])
-number_cistern = generate_field("Колличество цистерн ", X1, mass[6], X2, mass[6])
-number_cistern.config(state = "readonly")
+#number_cistern = generate_field("Колличество цистерн ", X1, mass[6], X2, mass[6])
+#number_cistern.config(state = "readonly")
 cost_tank = generate_field("Стоимость хранилища СПГ", X1, mass[7], X2, mass[7])
 volume_tank = generate_field("Объем хранилища СПГ", X1, mass[8], X2, mass[8])
-number_tank = generate_field("Колличество хранилищ ", X1, mass[9], X2, mass[9])
-number_tank.config(state = "readonly")
+#number_tank = generate_field("Колличество хранилищ ", X1, mass[9], X2, mass[9])
+#number_tank.config(state = "readonly")
 cost_gasifiers = generate_field("Стоимость газификаторов ", X1, mass[10], X2, mass[10])
 # cost_laying_high = generate_field("Стоимость прокладки газопровода высокого давления на километр", X1, mass[10], X2, mass[10])
 # cost_laying_medium= generate_field("Стоимость прокладки газопровода среднего давления на километр", X1, mass[11], X2, mass[11])
@@ -82,7 +82,8 @@ combo_exsample_gas_material = ttk.Combobox(root,
                            values=["Сталь", "Полиэтилен"],
                            postcommand=changeMaterials, width=17)
 combo_exsample_gas_material.place(x=X2, y=mass[12])
-
+text_entry=Text(root, height=8, width=35)
+text_entry.place(x=900, y=mass[16],)
 
 
 
