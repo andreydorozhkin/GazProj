@@ -268,6 +268,10 @@ def critical():
             #view.message_info(["Request!", "Ответ: " + answer])
             t0+=1 
         do_plot(need_city, answer)
+    view.text_entry.configure(state="normal")
+    view.text_entry.delete(-1.0,"end")
+    view.text_entry.insert(-2.0,"end")
+    view.text_entry.configure(state="disable")
         
 
 
