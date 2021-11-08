@@ -213,8 +213,11 @@ def critical():
         answer=[]
         count_tank=number_tank(need_city)
         count_cistern = number_cistern()
-        view.text_entry.insert(1.0,str(number_tank))
-        view.text_entry.insert(2.0,str(count_cistern))
+        view.text_entry.configure(state="normal")
+        view.text_entry.insert(1.24,str(count_tank)+",")
+        view.text_entry.insert(2.23,str(count_cistern)+",")
+        view.text_entry.configure(state='disabled')
+        #view.text_entry.insert(2.0,str(count_cistern))
         while t0!=30:
             #view.number_tank.config(state="normal")
             #view.number_tank.insert(0,str(number_tank))
