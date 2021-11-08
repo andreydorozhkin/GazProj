@@ -61,25 +61,27 @@ city_need_energy_begin = generate_field("от", 1030, mass[2], X2, mass[2])
 city_need_energy_end = generate_field("до", 1030, mass[3], X2, mass[3])
 cost_cistern = generate_field("Стоимость автомобильной цистерны", X1, mass[4], X2, mass[4])
 volume_cistern = generate_field("Объем автомобильной цистерны", X1, mass[5], X2, mass[5])
-#number_cistern = generate_field("Колличество цистерн ", X1, mass[20], X2, mass[20])
-cost_tank = generate_field("Стоимость хранилища СПГ", X1, mass[6], X2, mass[6])
-volume_tank = generate_field("Объем хранилища СПГ", X1, mass[7], X2, mass[7])
-#number_tank = generate_field("Колличество хранилищ ", X1, mass[5], X2, mass[5])
-cost_gasifiers = generate_field("Стоимость газификаторов ", X1, mass[8], X2, mass[8])
+number_cistern = generate_field("Колличество цистерн ", X1, mass[6], X2, mass[6])
+number_cistern.config(state = "readonly")
+cost_tank = generate_field("Стоимость хранилища СПГ", X1, mass[7], X2, mass[7])
+volume_tank = generate_field("Объем хранилища СПГ", X1, mass[8], X2, mass[8])
+number_tank = generate_field("Колличество хранилищ ", X1, mass[9], X2, mass[9])
+number_tank.config(state = "readonly")
+cost_gasifiers = generate_field("Стоимость газификаторов ", X1, mass[10], X2, mass[10])
 # cost_laying_high = generate_field("Стоимость прокладки газопровода высокого давления на километр", X1, mass[10], X2, mass[10])
 # cost_laying_medium= generate_field("Стоимость прокладки газопровода среднего давления на километр", X1, mass[11], X2, mass[11])
 #cost_GRPSH = generate_field("Стоимость ГРПШ", X1, mass[12], X2, mass[12])
 #efficiency_GRPSH = generate_field("Производительность ГРПШ", X1, mass[13], X2, mass[13])
 #cost_maintenance_GRPSH = generate_field("Стоимость обслуживания ГРПШ", X1, mass[14], X2, mass[14])
 #cost_maintenance_gas_pipeline = generate_field("Стоимость обслуживания газопровода", X1, mass[15], X2, mass[15])
-factory_distance=generate_field("Расстояние от завода до города", X1, mass[9], X2, mass[9])
+factory_distance=generate_field("Расстояние от завода до города", X1, mass[11], X2, mass[11])
 gas_material = Label(root, text="Материал газопровода", background="white") 
-gas_material.place(x=X1,y=mass[10])
+gas_material.place(x=X1,y=mass[12])
 
 combo_exsample_gas_material = ttk.Combobox(root, 
                            values=["Сталь", "Полиэтилен"],
                            postcommand=changeMaterials, width=17)
-combo_exsample_gas_material.place(x=X2, y=mass[10])
+combo_exsample_gas_material.place(x=X2, y=mass[12])
 
 
 
@@ -92,7 +94,7 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 14', command= lambda: model.critical())
-btplot1.place(x=X1, y=mass[12], width=150/1.5, height=60/1.5)
+btplot1.place(x=X1, y=mass[16], width=150/1.5, height=60/1.5)
 
 btplot2 = Button(root, text='Очистить',  # текст кнопки 
                  background="#60B9CE",     # фоновый цвет кнопки
@@ -100,7 +102,7 @@ btplot2 = Button(root, text='Очистить',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 14', command= lambda: model.clear())
-btplot2.place(x=X1, y=mass[15], width=150/1.5, height=60/1.5)
+btplot2.place(x=X1, y=mass[18], width=150/1.5, height=60/1.5)
 
 btplot2 = Button(root, text='Тест',  # текст кнопки 
                  background="#60B9CE",     # фоновый цвет кнопки
@@ -108,7 +110,7 @@ btplot2 = Button(root, text='Тест',  # текст кнопки
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
                  font='Tahoma 14', command= lambda: model.test())
-btplot2.place(x=X1, y=mass[18], width=150/1.5, height=60/1.5)
+btplot2.place(x=X1, y=mass[20], width=150/1.5, height=60/1.5)
 
 
 root.mainloop()
