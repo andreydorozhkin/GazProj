@@ -204,21 +204,24 @@ def finding_K(dp):
     return money   
 
 def critical():
+    str_tank=""
+    str_cistern=""
     t0=1
     t_cl=30
+    it=0
     need_city=needing_city() # view.city_need_energy
     for i in need_city:
         need_city=i
         t0=1
+        it+=1
         answer=[]
         count_tank=number_tank(need_city)
         count_cistern = number_cistern()
-        view.text_entry.configure(state="normal")
-        view.text_entry.insert(1.24, str(count_tank))
-        view.text_entry.insert(1.24, ",")
-        view.text_entry.insert(2.23, str(count_cistern))
-        view.text_entry.insert(2.23, ",")
-        view.text_entry.configure(state='disabled')
+        
+        str_tank+=str(count_tank)+"\t"
+        str_cistern+=str(count_cistern)+"\t"
+        
+        
         #view.text_entry.insert(2.0,str(count_cistern))
         while t0!=30:
             #view.number_tank.config(state="normal")
@@ -268,6 +271,11 @@ def critical():
             #view.message_info(["Request!", "Ответ: " + answer])
             t0+=1 
         do_plot(need_city, answer)
+    view.text_entry.configure(state="normal")
+    view.text_entry.insert(1.24, str_tank)
+    view.text_entry.insert(2.23, str_cistern)
+    view.text_entry.configure(state='disabled')
+    
         
 
 
