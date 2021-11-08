@@ -213,18 +213,18 @@ def critical():
         answer=[]
         while t0!=30:
             count_tank=number_tank(need_city)
-            view.number_tank.config(state="normal")
-            view.number_tank.insert(0,str(number_tank))
-            view.number_tank.config(state="readonly")
+            #view.number_tank.config(state="normal")
+            #view.number_tank.insert(0,str(number_tank))
+            #view.number_tank.config(state="readonly")
             K_chsw = capital_costs_storage(count_tank, field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
             CityYear = Q_year(need_city)
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
             count_cistern = number_cistern()
-            view.number_cistern.config(state="normal")
-            view.number_cistern.insert(0, str(count_cistern))
-            view.number_cistern.config(state="readonly")
+            #view.number_cistern.config(state="normal")
+            #view.number_cistern.insert(0, str(count_cistern))
+            #view.number_cistern.config(state="readonly")
             K_cist = capital_costs_cist(count_cistern, field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
             K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)
             Y_tcl = discount_rate(t_cl, 0.1)
