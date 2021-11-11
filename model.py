@@ -4,6 +4,7 @@ import numpy as np
 import math
 import sys
 import os
+import time
 
 
 
@@ -12,6 +13,8 @@ def field_getter(field):
     return request
 #----------------------------------------------------------------------------
 # Все проверено логи можно не ставить
+# Не используй эту функциюю пока все не будет отлажено, вызывай critiacl по кнопке а не от сюда
+
 def exception_func():
     array_entrys=[view.cost_gas,view.cost_natur_liquided_gas,
                   view.city_need_energy_begin,
@@ -36,6 +39,7 @@ def exception_func():
                     view.message_info("На данный момент возможный выбор материалов ограничен, "+
                                        "пожалуйста, выберете материал из предалагемых вариантов")
         except:
+            pass
             view.message_error("Значение "+str(i.get())+" введено некорректно!\n"+
             "Проверьте корректность введенных значений")
             break           
@@ -76,6 +80,14 @@ def clear():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
+def leg(param):                                           #А вот здесь оно блядь не работает
+    print("Param = "+str(param))
+    if param==1:
+        legend=(view.figure.legend(loc = "upper left"))
+    if param==0:
+        legend=(view.figure.legend(loc = "upper left"))
+        legend.remove()
+
 def do_plot(need_city, points):
     t0=[]
     t=1
@@ -85,13 +97,13 @@ def do_plot(need_city, points):
         t=t+1
     x=t0
     y=l0
-    #print(x)
-    #print(y)
     #[view.ax[x].clear() for x in range(1)]
     view.ax[0].plot(x,y,label="Q="+str(need_city/1000)+"МВт*ч/год")
-    view.figure.legend(loc = "upper left")
+    leg(1)
+    leg(0)
+    #leg=view.figure.legend(loc = "upper left") #ВОТ БЛЯТЬ ЛЕГЕНДА
+    #leg.remove() # ВОТ БЛЯДЬ РЕАЛИЗАЦИЯ ЕЁ УДАЛЕНИЯ
     view.canvas.draw()
-        # view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
 
 
 # Капитальные затраты на комплекс по сжижению газа
@@ -336,7 +348,6 @@ def clear_entry():
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
-    clear_entry()
     view.cost_gas.insert(0,"9.5")
     view.cost_natur_liquided_gas.insert(0,"18268.68711")
     view.cost_cistern.insert(0,"27768000")
