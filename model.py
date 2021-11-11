@@ -54,7 +54,7 @@ def do_plot(need_city, points):
     #print(x)
     #print(y)
     #[view.ax[x].clear() for x in range(1)]
-    view.ax[0].fill_between(x,y,label="Q="+str(need_city/1000)+"МВт*ч/год")
+    view.ax[0].plot(x,y,label="Q="+str(need_city/1000)+"МВт*ч/год")
     view.figure.legend(loc = "upper left")
     view.canvas.draw()
         # view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
