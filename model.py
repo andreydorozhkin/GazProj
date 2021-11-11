@@ -238,6 +238,7 @@ def finding_K(dp):
     return money   
 
 def critical():
+    clear_txt_entry()
     str_tank=""
     str_cistern=""
     t0=1
@@ -310,7 +311,12 @@ def critical():
     view.text_entry.insert(2.23, str_cistern)
     view.text_entry.configure(state='disabled')
     
-        
+
+def clear_txt_entry():
+    view.text_entry.configure(state="normal")
+    view.text_entry.delete(1.23, 1.33)
+    view.text_entry.delete(2.22, 2.33)
+    view.text_entry.configure(state='disabled')    
 
 
 def clear_entry():
