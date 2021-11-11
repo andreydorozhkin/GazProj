@@ -6,6 +6,43 @@ import sys
 import os
 
 
+
+def field_getter(field):
+    request=float(field.get())
+    return request
+#----------------------------------------------------------------------------
+# Все проверено логи можно не ставить
+def exception_func():
+    array_entrys=[view.cost_gas,view.cost_natur_liquided_gas,
+                  view.city_need_energy_begin,
+                  view.city_need_energy_end,view.cost_cistern,
+                  view.volume_cistern,view.cost_tank,
+                  view.volume_tank,view.cost_gasifiers,
+                  view.factory_distance]
+    count=0
+    for i in array_entrys:
+        try:
+            val=float(i.get())
+            if val<=0:
+                view.message_info("Значение "+str(val)+" не должно быть отрицательным")
+                break
+            else:
+                count+=1
+            if count==len(array_entrys):
+                material=view.combo_exsample_gas_material.get()
+                if material=="Сталь" or material=="Полиэтилен":
+                    critical()
+                else:
+                    view.message_info("На данный момент возможный выбор материалов ограничен, "+
+                                       "пожалуйста, выберете материал из предалагемых вариантов")
+        except:
+            view.message_error("Значение "+str(i.get())+" введено некорректно!\n"+
+            "Проверьте корректность введенных значений")
+            break           
+#-------------------------------------------------------------------------------
+
+
+
 def needing_city(): #тут тоже, но терпимо
     begin=field_getter(view.city_need_energy_begin)
     end=field_getter(view.city_need_energy_end)
@@ -33,10 +70,7 @@ def number_cistern():
     #view.number_cistern.insert(0,"1")
     return 1
     
-def field_getter(field):
-    request=float(field.get())
-    return request
-    
+ 
 
 def clear():
     python = sys.executable
@@ -291,6 +325,7 @@ def clear_entry():
      view.combo_exsample_gas_material.delete(0,"end")
      view.city_need_energy_begin.delete(0, "end")
      view.city_need_energy_end.delete(0, "end")
+
      #view.number_cistern.delete(0,"end")
 
 def test():
@@ -307,14 +342,6 @@ def test():
     view.combo_exsample_gas_material.insert(0,"Сталь")
     view.city_need_energy_begin.insert(0, "100000")
     view.city_need_energy_end.insert(0, "10000000")
-    #view.number_cistern.insert(0,"1")
-    # param=view.combo_exsample_gas_material.get()
-    # print(param)
-    #critical()
-    # if param!="Сталь" or param!="Полиэтилен":
-    #    view.messagebox.showinfo("Внимание",
-    #                             "Выберете материал газопровода 'Сталь' или 'Полиэтилен'")
-    # else:
-    #    critical()
+
     
 
