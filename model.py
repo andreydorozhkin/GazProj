@@ -52,8 +52,8 @@ def checker_func():
 
 
 def needing_city(): #тут тоже, но терпимо
-    begin=field_getter(view.city_need_energy_begin)
-    end=field_getter(view.city_need_energy_end)
+    begin=field_getter(view.city_need_energy_begin)*1000
+    end=field_getter(view.city_need_energy_end)*1000
     mid = end / 2
     need_city_list=[end, mid, begin]
     print("Список потребностей города:")
@@ -85,9 +85,9 @@ def clear():
     os.execl(python, python, * sys.argv)
 
 def do_plot(datamap,Q_needing):
-    Q1=Q_needing[0]
-    Q2=Q_needing[1]
-    Q3=Q_needing[2]
+    Q1=Q_needing[0]/1000
+    Q2=Q_needing[1]/1000
+    Q3=Q_needing[2]/1000
     Q1='Q='+str(Q1)
     Q2='Q='+str(Q2)
     Q3='Q='+str(Q3)
@@ -118,7 +118,7 @@ def do_plot(datamap,Q_needing):
         view.ax1.grid(True, linestyle='--')
         view.ax1.set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
                     fontsize=12, color="black")
-        view.ax1.set_ylabel("Удаленность потребителя от опорного пунка \nэнергоснабжения L, км",
+        view.ax1.set_ylabel("Расстояние от завода по производству СПГ до потребителя",
                     fontsize=12, color="black")
         view.bar1.draw()
     except:
@@ -394,8 +394,8 @@ def test():
     view.cost_gasifiers.insert(0,"2554200")
     view.factory_distance.insert(0,"10")
     view.combo_exsample_gas_material.insert(0,"Сталь")
-    view.city_need_energy_begin.insert(0, "100000")
-    view.city_need_energy_end.insert(0, "10000000")
+    view.city_need_energy_begin.insert(0, "100")
+    view.city_need_energy_end.insert(0, "10000")
 
     
 
