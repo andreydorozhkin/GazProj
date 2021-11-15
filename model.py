@@ -4,34 +4,125 @@ import numpy as np
 import math
 import sys
 import os
+import pandas as pd
+import pandas
+from pandas import DataFrame
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 
 def field_getter(field):
     request=float(field.get())
     return request
+#----------------------------------------------------------------------------
+# Все проверено логи можно не ставить
+# Не используй эту функциюю пока все не будет отлажено, вызывай critiacl по кнопке а не от сюда
+
+def checker_func():
+    array_entrys=[view.cost_gas,view.cost_natur_liquided_gas,
+                  view.city_need_energy_begin,
+                  view.city_need_energy_end,view.cost_cistern,
+                  view.volume_cistern,view.cost_tank,
+                  view.volume_tank,view.cost_gasifiers,
+                  view.factory_distance]
+    count=0
+    for i in array_entrys:
+        try:
+            val=float(i.get())
+            if val<=0:
+                view.message_info("Значение "+str(val)+" не должно быть отрицательным")
+                break
+            else:
+                count+=1
+            if count==len(array_entrys):
+                material=view.combo_exsample_gas_material.get()
+                if material=="Сталь" or material=="Полиэтилен":
+                   critical()
+                else:
+                    view.message_info("На данный момент возможный выбор материалов ограничен, "+
+                                       "пожалуйста, выберете материал из предалагемых вариантов")
+        except:
+            pass
+            view.message_error("Значение "+str(i.get())+" введено некорректно!\n"+
+            "Проверьте корректность введенных значений")
+            break           
+#-------------------------------------------------------------------------------
+
+
+
+def needing_city(): #тут тоже, но терпимо
+    begin=field_getter(view.city_need_energy_begin)
+    end=field_getter(view.city_need_energy_end)
+    mid = end / 2
+    need_city_list=[end, mid, begin]
+    print("Список потребностей города:")
+    print(need_city_list)
+    return need_city_list
+
+
+def number_tank(need_city): #тут ошибка
+    tcm=20
+    insert_tank=field_getter(view.volume_tank)*8.83/1000
+    nt=[]
+    #while tcm <= 100:
+        #qeq = (((need_city/1000)/12)*tcm)/40/insert_tank
+        #print(str(qeq))
+        #nt.append(round(qeq))
+        #tcm+=20
+    print("Ретурн number tank есть")
+    return 1
+
+def number_cistern():
+    #view.number_cistern.config(state="normal")
+    #view.number_cistern.insert(0,"1")
+    return 1
     
+ 
 
 def clear():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
-def do_plot(need_city, points):
-    t0=[]
+def do_plot(datamap,Q_needing):
+    Q1=Q_needing[0]
+    Q2=Q_needing[1]
+    Q3=Q_needing[2]
+    Q1='Q='+str(Q1)
+    Q2='Q='+str(Q2)
+    Q3='Q='+str(Q3)
     t=1
-    l0=points
-    while t!=30:
+    t0=[]
+    while t != 30:
         t0.append(t)
-        t=t+1
-    x=t0
-    y=l0
-    #print(x)
-    #print(y)
-    #[view.ax[x].clear() for x in range(1)]
-    view.ax[0].fill_between(x,y,label="Q="+str(need_city/1000)+"МВт*ч/год")
-    view.figure.legend(loc = "upper left")
-    view.canvas.draw()
-        # view.message_ask(["Request!", "Нет ошибки, график отрисован?"]);
+        t+=1
+    Q=t0
+    X="X"
+    data={X:Q,
+          Q1:datamap[0],
+          Q2:datamap[1],
+          Q3:datamap[2]
+        }
+    legend = view.ax1.legend()
+    legend.remove()
+    df1 = DataFrame(data, columns=[X,Q1,Q2,Q3])
+    colors = ['black', 'red', 'blue']
+    df1 = df1[[X,Q1,Q2,Q3]].groupby(X).sum()
+    view.ax1.clear()
+    try:
+        df1.plot(kind='area', 
+                color=colors,
+                alpha=0.7,
+                stacked=True,
+                legend=True, ax=view.ax1)
+        view.ax1.grid(True, linestyle='--')
+        view.ax1.set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
+                    fontsize=12, color="black")
+        view.ax1.set_ylabel("Удаленность потребителя от опорного пунка \nэнергоснабжения L, км",
+                    fontsize=12, color="black")
+        view.bar1.draw()
+    except:
+        view.message_error("Проверьте корректность вводных данных!")
 
 
 # Капитальные затраты на комплекс по сжижению газа
@@ -66,6 +157,7 @@ def Q_year(need_city):
 # Эксплуатационны затраты на ШГРП
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
+
 #Капитальные затраты на газораспределительные шкафы
 def capital_cost_GRPSH(Q):
     cap_GRPSH=(19.35906314*Q*1380)/1800  #Q_y-Это список
@@ -87,6 +179,7 @@ def operating_costs_gazif(capital_costs):
 
 # Капитальные затраты на хранилища
 def capital_costs_storage(num_storage, cost_storage):
+    print("capital_costs_storage Отработал")
     return num_storage * cost_storage
 
 # Эксплуатационные затраты на хранилища
@@ -169,29 +262,51 @@ def finding_K(dp):
         ind=array_difference.index(smallest_number)
         K_ud=K_mass[ind+1]
         money=mass[ind+1]
+        print("finding_K")
         return money
     smallest_number = min(array_difference)
     ind=array_difference.index(smallest_number)
     K_ud=K_mass[ind]
     money=mass[ind]
+    print("finding_K")
     return money   
 
 def critical():
+    clear_txt_entry()
+    str_tank=""
+    str_cistern=""
     t0=1
     t_cl=30
-    need_city=(10000000) # view.city_need_energy
-    for i in range(3):
-        need_city=(need_city * (10**-i))
-        print("Need city: " + str(need_city))
+    it=0
+    need_city=needing_city() # view.city_need_energy
+    mass_lvl2=[]
+    Q_global=[]
+    for i in need_city:
+        need_city=i
         t0=1
+        it+=1
         answer=[]
+        count_tank=number_tank(need_city)
+        count_cistern = number_cistern()
+        
+        str_tank+=str(count_tank)+"\t"
+        str_cistern+=str(count_cistern)+"\t"
+        
+        
+        #view.text_entry.insert(2.0,str(count_cistern))
         while t0!=30:
-            K_chsw = capital_costs_storage(field_getter(view.number_tank), field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
+            #view.number_tank.config(state="normal")
+            #view.number_tank.insert(0,str(number_tank))
+            #view.number_tank.config(state="readonly")
+            K_chsw = capital_costs_storage(count_tank, field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
             CityYear = Q_year(need_city)
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
-            K_cist = capital_costs_cist(field_getter(view.number_cistern), field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
+            #view.number_cistern.config(state="normal")
+            #view.number_cistern.insert(0, str(count_cistern))
+            #view.number_cistern.config(state="readonly")
+            K_cist = capital_costs_cist(count_cistern, field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
             K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)
             Y_tcl = discount_rate(t_cl, 0.1)
             Y_t0 = discount_rate(t0, 0.1)
@@ -223,23 +338,49 @@ def critical():
             # print("Ишгрп: " + str(N_shgrp))
             # print("Куд: " + str(K_ud))
             # print("=================")
-            answer.append(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
+            final_volume=critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl)
+            answer.append(final_volume)
             #view.message_info(["Request!", "Ответ: " + answer])
-            t0+=1 
-        do_plot(need_city, answer)
-        need_city=need_city / (10**-i)
+            t0+=1
+        mass_lvl2.append(answer)
+        Q_global.append(need_city)
+    mass_lvl2.reverse()
+    Q_global.reverse()
+    print(mass_lvl2)
+    print(Q_global)
+    view.text_entry.configure(state="normal")
+    view.text_entry.insert(1.24, str_tank)
+    view.text_entry.insert(2.23, str_cistern)
+    view.text_entry.configure(state='disabled')
+    material=view.combo_exsample_gas_material.get()
+    if material=="Сталь" or material=="Полиэтилен":
+        do_plot(mass_lvl2,Q_global)
+    else:
+        view.message_info("На данный момент возможный выбор материалов ограничен, "+
+                           "пожалуйста, выберете материал из предалагемых вариантов")
+    
+
+def clear_txt_entry():
+    view.text_entry.configure(state="normal")
+    view.text_entry.delete(1.23, 1.33)
+    view.text_entry.delete(2.22, 2.33)
+    view.text_entry.configure(state='disabled')    
 
 
 def clear_entry():
      view.cost_gas.delete(0, 'end')
      view.cost_natur_liquided_gas.delete(0, 'end')
      view.cost_cistern.delete(0, 'end')
-     view.number_cistern.delete(0, 'end')
+     view.volume_cistern.delete(0, 'end')
      view.cost_tank.delete(0, 'end')
-     view.number_tank.delete(0, 'end')
+     view.volume_tank.delete(0, 'end')
      view.cost_gasifiers.delete(0, 'end')
      view.factory_distance.delete(0, 'end')
      view.combo_exsample_gas_material.delete(0,"end")
+     view.city_need_energy_begin.delete(0, "end")
+     view.city_need_energy_end.delete(0, "end")
+
+     #view.number_cistern.delete(0,"end")
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
@@ -247,19 +388,14 @@ def test():
     view.cost_gas.insert(0,"9.5")
     view.cost_natur_liquided_gas.insert(0,"18268.68711")
     view.cost_cistern.insert(0,"27768000")
-    view.number_cistern.insert(0,"1")
+    view.volume_cistern.insert(0,"34700.1")
     view.cost_tank.insert(0,"4049849.86")
-    view.number_tank.insert(0,"1")
+    view.volume_tank.insert(0,"72643.2")
     view.cost_gasifiers.insert(0,"2554200")
     view.factory_distance.insert(0,"10")
     view.combo_exsample_gas_material.insert(0,"Сталь")
-    # param=view.combo_exsample_gas_material.get()
-    # print(param)
-    critical()
-    # if param!="Сталь" or param!="Полиэтилен":
-    #    view.messagebox.showinfo("Внимание",
-    #                             "Выберете материал газопровода 'Сталь' или 'Полиэтилен'")
-    # else:
-    #    critical()
+    view.city_need_energy_begin.insert(0, "100000")
+    view.city_need_energy_end.insert(0, "10000000")
+
     
 
