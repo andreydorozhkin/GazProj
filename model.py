@@ -4,7 +4,11 @@ import numpy as np
 import math
 import sys
 import os
-import time
+import pandas as pd
+import pandas
+from pandas import DataFrame
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 
@@ -15,7 +19,7 @@ def field_getter(field):
 # Все проверено логи можно не ставить
 # Не используй эту функциюю пока все не будет отлажено, вызывай critiacl по кнопке а не от сюда
 
-def exception_func():
+def checker_func():
     array_entrys=[view.cost_gas,view.cost_natur_liquided_gas,
                   view.city_need_energy_begin,
                   view.city_need_energy_end,view.cost_cistern,
@@ -34,7 +38,7 @@ def exception_func():
             if count==len(array_entrys):
                 material=view.combo_exsample_gas_material.get()
                 if material=="Сталь" or material=="Полиэтилен":
-                    critical()
+                   critical()
                 else:
                     view.message_info("На данный момент возможный выбор материалов ограничен, "+
                                        "пожалуйста, выберете материал из предалагемых вариантов")
@@ -61,12 +65,12 @@ def number_tank(need_city): #тут ошибка
     tcm=20
     insert_tank=field_getter(view.volume_tank)*8.83/1000
     nt=[]
-    print("Промежутки: ")
-    while tcm <= 100:
-        qeq = (((need_city/1000)/12)*tcm)/40/insert_tank
-        print(str(qeq))
-        nt.append(round(qeq))
-        tcm+=20
+    #while tcm <= 100:
+        #qeq = (((need_city/1000)/12)*tcm)/40/insert_tank
+        #print(str(qeq))
+        #nt.append(round(qeq))
+        #tcm+=20
+    print("Ретурн number tank есть")
     return 1
 
 def number_cistern():
@@ -80,30 +84,45 @@ def clear():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
-def leg(param):                                           #А вот здесь оно блядь не работает
-    print("Param = "+str(param))
-    if param==1:
-        legend=(view.figure.legend(loc = "upper left"))
-    if param==0:
-        legend=(view.figure.legend(loc = "upper left"))
-        legend.remove()
-
-def do_plot(need_city, points):
-    t0=[]
+def do_plot(datamap,Q_needing):
+    Q1=Q_needing[0]
+    Q2=Q_needing[1]
+    Q3=Q_needing[2]
+    Q1='Q='+str(Q1)
+    Q2='Q='+str(Q2)
+    Q3='Q='+str(Q3)
     t=1
-    l0=points
-    while t!=30:
+    t0=[]
+    while t != 30:
         t0.append(t)
-        t=t+1
-    x=t0
-    y=l0
-    #[view.ax[x].clear() for x in range(1)]
-    view.ax[0].plot(x,y,label="Q="+str(need_city/1000)+"МВт*ч/год")
-    leg(1)
-    leg(0)
-    #leg=view.figure.legend(loc = "upper left") #ВОТ БЛЯТЬ ЛЕГЕНДА
-    #leg.remove() # ВОТ БЛЯДЬ РЕАЛИЗАЦИЯ ЕЁ УДАЛЕНИЯ
-    view.canvas.draw()
+        t+=1
+    Q=t0
+    X="X"
+    data={X:Q,
+          Q1:datamap[0],
+          Q2:datamap[1],
+          Q3:datamap[2]
+        }
+    legend = view.ax1.legend()
+    legend.remove()
+    df1 = DataFrame(data, columns=[X,Q1,Q2,Q3])
+    colors = ['black', 'red', 'blue']
+    df1 = df1[[X,Q1,Q2,Q3]].groupby(X).sum()
+    view.ax1.clear()
+    try:
+        df1.plot(kind='area', 
+                color=colors,
+                alpha=0.7,
+                stacked=True,
+                legend=True, ax=view.ax1)
+        view.ax1.grid(True, linestyle='--')
+        view.ax1.set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
+                    fontsize=12, color="black")
+        view.ax1.set_ylabel("Удаленность потребителя от опорного пунка \nэнергоснабжения L, км",
+                    fontsize=12, color="black")
+        view.bar1.draw()
+    except:
+        view.message_error("Проверьте корректность вводных данных!")
 
 
 # Капитальные затраты на комплекс по сжижению газа
@@ -160,6 +179,7 @@ def operating_costs_gazif(capital_costs):
 
 # Капитальные затраты на хранилища
 def capital_costs_storage(num_storage, cost_storage):
+    print("capital_costs_storage Отработал")
     return num_storage * cost_storage
 
 # Эксплуатационные затраты на хранилища
@@ -242,11 +262,13 @@ def finding_K(dp):
         ind=array_difference.index(smallest_number)
         K_ud=K_mass[ind+1]
         money=mass[ind+1]
+        print("finding_K")
         return money
     smallest_number = min(array_difference)
     ind=array_difference.index(smallest_number)
     K_ud=K_mass[ind]
     money=mass[ind]
+    print("finding_K")
     return money   
 
 def critical():
@@ -257,6 +279,8 @@ def critical():
     t_cl=30
     it=0
     need_city=needing_city() # view.city_need_energy
+    mass_lvl2=[]
+    Q_global=[]
     for i in need_city:
         need_city=i
         t0=1
@@ -314,14 +338,26 @@ def critical():
             # print("Ишгрп: " + str(N_shgrp))
             # print("Куд: " + str(K_ud))
             # print("=================")
-            answer.append(critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl))
+            final_volume=critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl)
+            answer.append(final_volume)
             #view.message_info(["Request!", "Ответ: " + answer])
-            t0+=1 
-        do_plot(need_city, answer)
+            t0+=1
+        mass_lvl2.append(answer)
+        Q_global.append(need_city)
+    mass_lvl2.reverse()
+    Q_global.reverse()
+    print(mass_lvl2)
+    print(Q_global)
     view.text_entry.configure(state="normal")
     view.text_entry.insert(1.24, str_tank)
     view.text_entry.insert(2.23, str_cistern)
     view.text_entry.configure(state='disabled')
+    material=view.combo_exsample_gas_material.get()
+    if material=="Сталь" or material=="Полиэтилен":
+        do_plot(mass_lvl2,Q_global)
+    else:
+        view.message_info("На данный момент возможный выбор материалов ограничен, "+
+                           "пожалуйста, выберете материал из предалагемых вариантов")
     
 
 def clear_txt_entry():
@@ -348,6 +384,7 @@ def clear_entry():
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
+    clear_entry()
     view.cost_gas.insert(0,"9.5")
     view.cost_natur_liquided_gas.insert(0,"18268.68711")
     view.cost_cistern.insert(0,"27768000")
