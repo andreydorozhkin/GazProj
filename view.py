@@ -12,15 +12,12 @@ root.resizable(width=False, height=False)
 root.title("Main Screen")
 root["bg"]="white"
 
-frame1 = Frame(root); frame1.place(x=0, y=0, width=700, height=700) #325 height
-figure = plt.Figure(figsize=(5,5), facecolor='white', edgecolor="white")
-canvas = FigureCanvasTkAgg(figure, frame1)
-canvas.get_tk_widget().place(x=0,y=0,width=700,height=650)
-ax = [figure.add_subplot(1,1,x+1)for x in range(1)]
-ax[0].set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
-                fontsize=12, color="black")
-ax[0].set_ylabel("Удаленность потребителя от опорного пунка \nэнергоснабжения L, км",
-                fontsize=12, color="black")
+figure1 = plt.Figure(figsize=(8,5), dpi=100)
+ax1 = figure1.add_subplot(111)
+bar1 = FigureCanvasTkAgg(figure1, root)
+bar1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
+ax1.grid(True, linestyle='--')
+ax1.minorticks_on()
 
 #Визуальный метод определния материала
 def changeMaterials():
@@ -99,7 +96,7 @@ btplot1 = Button(root, text='Рассчитать',  # текст кнопки
                  foreground="black",     # цвет текста
                  padx="20",                # отступ от границ до содержимого по горизонтали
                  pady="8",                 # отступ от границ до содержимого по вертикали
-                 font='Tahoma 14', command= lambda: model.exception_func())
+                 font='Tahoma 14', command= lambda: model.critical())
 btplot1.place(x=X1, y=mass[16], width=150/1.5, height=60/1.5)
 
 btplot2 = Button(root, text='Очистить',  # текст кнопки 
