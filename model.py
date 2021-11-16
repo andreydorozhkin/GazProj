@@ -43,44 +43,47 @@ def clear():
 
 #Построение и отрисовка графика в окне view
 def do_plot(datamap,Q_needing):
-    Q1=Q_needing[0]/1000
-    Q2=Q_needing[1]/1000
-    Q3=Q_needing[2]/1000
-    Q1='Q='+str(Q1)
-    Q2='Q='+str(Q2)
-    Q3='Q='+str(Q3)
-    t=1
-    t0=[]
-    while t != 30:
-        t0.append(t)
-        t+=1
-    Q=t0
-    X="X"
-    data={X:Q,
-          Q1:datamap[0],
-          Q2:datamap[1],
-          Q3:datamap[2]
-        }
-    legend = view.ax1.legend()
-    legend.remove()
-    df1 = DataFrame(data, columns=[X,Q1,Q2,Q3])
-    colors = ['green', 'red', 'blue']
-    df1 = df1[[X,Q1,Q2,Q3]].groupby(X).sum()
-    view.ax1.clear()
     try:
-        df1.plot(kind='area', 
-                color=colors,
-                alpha=0.7,
-                stacked=True,
-                legend=True, ax=view.ax1)
-        view.ax1.grid(True, linestyle='--')
-        view.ax1.set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
+        Q1=Q_needing[0]/1000
+        Q2=Q_needing[1]/1000
+        Q3=Q_needing[2]/1000
+        Q1='Q='+str(Q1)
+        Q2='Q='+str(Q2)
+        Q3='Q='+str(Q3)
+        t=1
+        t0=[]
+        while t != 30:
+            t0.append(t)
+            t+=1
+        Q=t0
+        X="X"
+        data={X:Q,
+              Q1:datamap[0],
+              Q2:datamap[1],
+              Q3:datamap[2]
+            }
+        legend = view.ax1.legend()
+        legend.remove()
+        df1 = DataFrame(data, columns=[X,Q1,Q2,Q3])
+        colors = ['green', 'red', 'blue']
+        df1 = df1[[X,Q1,Q2,Q3]].groupby(X).sum()
+        view.ax1.clear()
+        try:
+            df1.plot(kind='area', 
+                    color=colors,
+                    alpha=0.7,
+                    stacked=True,
+                    legend=True, ax=view.ax1)
+            view.ax1.grid(True, linestyle='--')
+            view.ax1.set_xlabel("Время газификации опорного пункта \nсетевым природным газом t0 лет",
                     fontsize=12, color="black")
-        view.ax1.set_ylabel("Расстояние от завода по производству СПГ до потребителя",
+            view.ax1.set_ylabel("Расстояние от завода по производству СПГ до потребителя",
                     fontsize=12, color="black")
-        view.bar1.draw()
+            view.bar1.draw()
+        except:
+            view.message_error("Проверьте корректность вводных данных!")
     except:
-        view.message_error("Проверьте корректность вводных данных!")
+        pass
 
 
 # Капитальные затраты на комплекс по сжижению газа
@@ -235,6 +238,9 @@ def critical():
     mass_lvl2=[]
     Q_global=[]
     for i in need_city:
+        if field_getter(view.city_need_energy_begin)<100 or field_getter(view.city_need_energy_begin)>10000 or field_getter(view.city_need_energy_end)<100 or field_getter(view.city_need_energy_end)>10000:
+            view.message_info("Входные значения \nгодового объема потребления от 100 до 10000")
+            break
         need_city=i
         t0=1
         it+=1
