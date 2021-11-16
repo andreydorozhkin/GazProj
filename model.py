@@ -46,9 +46,9 @@ def do_plot(datamap, Q_needing):
         Q1 = Q_needing[0] / 1000
         Q2 = Q_needing[1] / 1000
         Q3 = Q_needing[2] / 1000
-        Q1 = 'Q=' + str(Q1)
-        Q2 = 'Q=' + str(Q2)
-        Q3 = 'Q=' + str(Q3)
+        Q1 = 'Q=' + str(Q1) + " МВт*ч/год"
+        Q2 = 'Q=' + str(Q2) + " МВт*ч/год"
+        Q3 = 'Q=' + str(Q3) + " МВт*ч/год"
         t = 1
         t0 = []
         while t != 30:
