@@ -1,3 +1,5 @@
+#Подключение необходимых библиотек
+
 from collections import Counter
 import view 
 import numpy as np
@@ -15,75 +17,31 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 def field_getter(field):
     request=float(field.get())
     return request
-#----------------------------------------------------------------------------
-# Все проверено логи можно не ставить
-# Не используй эту функциюю пока все не будет отлажено, вызывай critiacl по кнопке а не от сюда
 
-def checker_func():
-    array_entrys=[view.cost_gas,view.cost_natur_liquided_gas,
-                  view.city_need_energy_begin,
-                  view.city_need_energy_end,view.cost_cistern,
-                  view.volume_cistern,view.cost_tank,
-                  view.volume_tank,view.cost_gasifiers,
-                  view.factory_distance]
-    count=0
-    for i in array_entrys:
-        try:
-            val=float(i.get())
-            if val<=0:
-                view.message_info("Значение "+str(val)+" не должно быть отрицательным")
-                break
-            else:
-                count+=1
-            if count==len(array_entrys):
-                material=view.combo_exsample_gas_material.get()
-                if material=="Сталь" or material=="Полиэтилен":
-                   critical()
-                else:
-                    view.message_info("На данный момент возможный выбор материалов ограничен, "+
-                                       "пожалуйста, выберете материал из предалагемых вариантов")
-        except:
-            pass
-            view.message_error("Значение "+str(i.get())+" введено некорректно!\n"+
-            "Проверьте корректность введенных значений")
-            break           
-#-------------------------------------------------------------------------------
-
-
-
-def needing_city(): #тут тоже, но терпимо
+def needing_city(): 
     begin=field_getter(view.city_need_energy_begin)*1000
     end=field_getter(view.city_need_energy_end)*1000
     mid = end / 2
     need_city_list=[end, mid, begin]
-    print("Список потребностей города:")
-    print(need_city_list)
     return need_city_list
 
 
-def number_tank(need_city): #тут ошибка
+def number_tank(need_city):
     tcm=20
     insert_tank=field_getter(view.volume_tank)*8.83/1000
     nt=[]
-    #while tcm <= 100:
-        #qeq = (((need_city/1000)/12)*tcm)/40/insert_tank
-        #print(str(qeq))
-        #nt.append(round(qeq))
-        #tcm+=20
-    print("Ретурн number tank есть")
     return 1
 
 def number_cistern():
-    #view.number_cistern.config(state="normal")
-    #view.number_cistern.insert(0,"1")
     return 1
     
  
-
+#Перезапуск окна
 def clear():
     python = sys.executable
     os.execl(python, python, * sys.argv)
 
+#Построение и отрисовка графика в окне view
 def do_plot(datamap,Q_needing):
     Q1=Q_needing[0]/1000
     Q2=Q_needing[1]/1000
@@ -106,7 +64,7 @@ def do_plot(datamap,Q_needing):
     legend = view.ax1.legend()
     legend.remove()
     df1 = DataFrame(data, columns=[X,Q1,Q2,Q3])
-    colors = ['black', 'red', 'blue']
+    colors = ['green', 'red', 'blue']
     df1 = df1[[X,Q1,Q2,Q3]].groupby(X).sum()
     view.ax1.clear()
     try:
@@ -129,6 +87,7 @@ def do_plot(datamap,Q_needing):
 def capital_costs_ksg(Q, cost_liquid_gaz):
     costs = 2 * Q * cost_liquid_gaz
     return costs
+
 # Эксплуатационные затраты на комплекс по сжижению газа
 def operation_costs_ksg(K_ksg):
     N1 = 0.1*K_ksg
@@ -140,7 +99,7 @@ def operation_costs_ksg(K_ksg):
     return N_ksg
 
 
-# капитальные вложения в систему газоснабжения объекта СПГ
+# Капитальные вложения в систему газоснабжения объекта СПГ
 def capital_costs_spg(K_ksg, K_cist, K_khsv, K_gazif): 
     costs = K_ksg+K_cist+K_khsv+K_gazif
     return costs
@@ -158,7 +117,7 @@ def Q_year(need_city):
 def operating_cost_shgrp(K_shgrp):
     return K_shgrp/10
 
-#Капитальные затраты на газораспределительные шкафы
+# Капитальные затраты на газораспределительные шкафы
 def capital_cost_GRPSH(Q):
     cap_GRPSH=(19.35906314*Q*1380)/1800  #Q_y-Это список
     return cap_GRPSH
@@ -179,7 +138,6 @@ def operating_costs_gazif(capital_costs):
 
 # Капитальные затраты на хранилища
 def capital_costs_storage(num_storage, cost_storage):
-    print("capital_costs_storage Отработал")
     return num_storage * cost_storage
 
 # Эксплуатационные затраты на хранилища
@@ -206,7 +164,6 @@ def discount_rate(t_cl, E):
 
 # Остаточная ликвидационная стоиомость
 def liquidation_value(K_ksg, K_cist, K_khsv, K_gazif, t0, t_cl, K_hswd):
-
     one_mltpr = (t_cl-t0)/t_cl*(K_ksg+K_cist+K_gazif+K_khsv-K_hswd)
     return one_mltpr
 
@@ -223,17 +180,15 @@ def critical_distance(K_spg, Y_tcl,  N_spg, Y_t0, K_shgrp, L_spg, C_pg, Q_year, 
     ext2_step=four_step/ext_step
     five_step=ext2_step+Y_t0
     denominator=K_ud*five_step
-    #print(numerator)
-    #print(denominator)
     distance=numerator/denominator
     return distance
 
 def diametr(Q0):
-    P_ud = 0.25/(1.1*field_getter(view.factory_distance)*1000) #view.factory_distance
+    P_ud = 0.25/(1.1*field_getter(view.factory_distance)*1000) 
     p0 = 0.101325
     A=0.101325/0.6*162*(pow(3.14,2))
     material_steel=[0.022, 2, 5] 
-    material_polyethylene=[0.0446, 1.75, 4.75]  #A,m1,m2
+    material_polyethylene=[0.0446, 1.75, 4.75]  
     B=material_steel[0]
     m=material_steel[1]
     m1=material_steel[2]
@@ -262,13 +217,11 @@ def finding_K(dp):
         ind=array_difference.index(smallest_number)
         K_ud=K_mass[ind+1]
         money=mass[ind+1]
-        print("finding_K")
         return money
     smallest_number = min(array_difference)
     ind=array_difference.index(smallest_number)
     K_ud=K_mass[ind]
     money=mass[ind]
-    print("finding_K")
     return money   
 
 def critical():
@@ -292,20 +245,12 @@ def critical():
         str_tank+=str(count_tank)+"\t"
         str_cistern+=str(count_cistern)+"\t"
         
-        
-        #view.text_entry.insert(2.0,str(count_cistern))
         while t0!=30:
-            #view.number_tank.config(state="normal")
-            #view.number_tank.insert(0,str(number_tank))
-            #view.number_tank.config(state="readonly")
             K_chsw = capital_costs_storage(count_tank, field_getter(view.cost_tank)) #view.number_tank   view.cost_tank  
             CityYear = Q_year(need_city)
             K_gazif = capital_costs_gazif(CityYear, power_gazif(), field_getter(view.cost_gasifiers)) #  view.cost_gasifiers
             a = field_getter(view.cost_natur_liquided_gas) # view.cost_natur_liquided_gas
             K_ksg = capital_costs_ksg(CityYear, a)
-            #view.number_cistern.config(state="normal")
-            #view.number_cistern.insert(0, str(count_cistern))
-            #view.number_cistern.config(state="readonly")
             K_cist = capital_costs_cist(count_cistern, field_getter(view.cost_cistern)) #  view.number_cistern   view.cost_cistern
             K_spg = capital_costs_spg(K_ksg, K_cist, K_chsw, K_gazif)
             Y_tcl = discount_rate(t_cl, 0.1)
@@ -340,7 +285,6 @@ def critical():
             # print("=================")
             final_volume=critical_distance(K_spg, Y_tcl, N_spg, Y_t0, K_shgrp, L_spg, C_pg, CityYear, kpd, N_shgrp, K_ud, t_cl)
             answer.append(final_volume)
-            #view.message_info(["Request!", "Ответ: " + answer])
             t0+=1
         mass_lvl2.append(answer)
         Q_global.append(need_city)
@@ -380,7 +324,6 @@ def clear_entry():
      view.city_need_energy_begin.delete(0, "end")
      view.city_need_energy_end.delete(0, "end")
 
-     #view.number_cistern.delete(0,"end")
 
 def test():
     # 1 Значение название поля Entry, 2 Запись поля
